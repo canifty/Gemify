@@ -6,21 +6,21 @@
 //
 
 import SwiftUI
+import RealityKitContent
 
 @main
 struct GemifyApp: App {
-    @State private var selectedImmersionStyle: ImmersionStyle = .progressive
-    
+    @State private var selectedImmersionStyle: ImmersionStyle = .mixed
+
     var body: some Scene {
         
-        WindowGroup {
-            LaunchView()
-        }
-        
-        ImmersiveSpace(id: "CubeImmersive") {
+        ImmersiveSpace {
             CubeImmersiveView()
         }
-        .immersionStyle(selection: $selectedImmersionStyle,
-                        in: .mixed, .progressive, .full)
+//        ImmersiveSpace(id: "CubeImmersive") {
+//            CubeImmersiveView()
+//        }
+//        .immersionStyle(selection: $selectedImmersionStyle,
+//                        in: .mixed)
     }
 }
