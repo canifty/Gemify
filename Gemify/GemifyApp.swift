@@ -9,32 +9,18 @@ import SwiftUI
 
 @main
 struct GemifyApp: App {
-    
-    @State private var appModel = AppModel()
-    @State private var avPlayerViewModel = AVPlayerViewModel()
+    @State private var selectedImmersionStyle: ImmersionStyle = .progressive
     
     var body: some Scene {
+        
         WindowGroup {
-            if avPlayerViewModel.isPlaying {
-                AVPlayerView(viewModel: avPlayerViewModel)
-            } else {
-                ContentView()
-                    .environment(appModel)
-            }
+            LaunchView()
         }
         
-        ImmersiveSpace(id: appModel.immersiveSpaceID) {
-            ImmersiveView()
-                .environment(appModel)
-                .onAppear {
-                    appModel.immersiveSpaceState = .open
-                    avPlayerViewModel.play()
-                }
-                .onDisappear {
-                    appModel.immersiveSpaceState = .closed
-                    avPlayerViewModel.reset()
-                }
+        ImmersiveSpace(id: "CubeImmersive") {
+            CubeImmersiveView()
         }
-        .immersionStyle(selection: .constant(.full), in: .full)
+        .immersionStyle(selection: $selectedImmersionStyle,
+                        in: .mixed, .progressive, .full)
     }
 }
