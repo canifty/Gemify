@@ -14,6 +14,7 @@ def Xform "Root"
     )
     {
         float3 xformOp:scale = (0.01, 0.01, 0.01)
+        float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         over "mtl"
@@ -67,6 +68,16 @@ def Xform "Root"
         )
         {
         }
+    }
+
+    def "Diamondtest" (
+        active = true
+        prepend references = @Diamondtest.usdz@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (3.3485253e-7, 1.1536218, -1.6205428)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }
 

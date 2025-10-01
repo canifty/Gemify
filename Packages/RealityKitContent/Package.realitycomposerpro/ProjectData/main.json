@@ -1,13 +1,25 @@
 {
   "pathsToIds" : {
     "\/RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Cube.usda" : "9DD882B9-1E14-40B7-B211-1817915B6D9C",
+    "\/RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Diomand.usda" : "C0143BA5-B120-474A-BA83-261E2A591D98",
+    "\/RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Diomandtest.usda" : "3D267840-56B5-4889-B872-13C131E377EF",
+    "\/RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Something.usda" : "CFFCEAE4-04C4-4596-AEB3-06134696E6B0",
+    "RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Cone.usda" : "0AC7CD27-7CF1-4174-B569-2761D533919C",
     "RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Cube.usda" : "A11D99D3-89A7-4709-94A1-E42DE9717D04",
-    "RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Immersive.usda" : "C6A7F375-BFE9-46E0-9EA6-1A6B150F43FD"
+    "RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Diomandtest.usda" : "EADBC3E7-685F-498D-8A40-392FD78BBEC0",
+    "RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Immersive.usda" : "C6A7F375-BFE9-46E0-9EA6-1A6B150F43FD",
+    "RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Scene.usda" : "C408AFB0-263B-4005-BDC4-0F05B84C5976"
   },
   "projectID" : -1957373779216416045,
   "uuidToIntID" : {
+    "0AC7CD27-7CF1-4174-B569-2761D533919C" : -686324292132268962,
+    "3D267840-56B5-4889-B872-13C131E377EF" : 1407677062068389331,
     "9DD882B9-1E14-40B7-B211-1817915B6D9C" : 3007217462864628103,
     "A11D99D3-89A7-4709-94A1-E42DE9717D04" : 7703198080796128687,
-    "C6A7F375-BFE9-46E0-9EA6-1A6B150F43FD" : -3279830473159039210
+    "C0143BA5-B120-474A-BA83-261E2A591D98" : 1322205897764251868,
+    "C408AFB0-263B-4005-BDC4-0F05B84C5976" : -4468650392192685467,
+    "C6A7F375-BFE9-46E0-9EA6-1A6B150F43FD" : -3279830473159039210,
+    "CFFCEAE4-04C4-4596-AEB3-06134696E6B0" : 4958643794524913136,
+    "EADBC3E7-685F-498D-8A40-392FD78BBEC0" : 788785665931366465
   }
 }

@@ -22,10 +22,5 @@ struct GemifyApp: App {
         ImmersiveSpace {
             ImmersiveView()
         }
-//        ImmersiveSpace(id: "Immersive") {
-//            ImmersiveView()
-//        }
-//        .immersionStyle(selection: $selectedImmersionStyle,
-//                        in: .mixed)
     }
 }
