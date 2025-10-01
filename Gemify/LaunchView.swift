@@ -15,13 +15,13 @@ struct LaunchView: View {
     @State private var isImmersiveSpaceOpen: Bool = false
     
     var body: some View {
-        Button(isImmersiveSpaceOpen ? "Close Cube Immersion" : "Open Cube Immersion") {
+        Button(isImmersiveSpaceOpen ? "Close Immersion" : "Open Immersion") {
             Task {
                 if isImmersiveSpaceOpen {
                     await dismissImmersiveSpace()
                     isImmersiveSpaceOpen = false
                 } else {
-                    let result = await openImmersiveSpace(id: "CubeImmersive")
+                    let result = await openImmersiveSpace(id: "Immersive")
                     switch result {
                     case .opened:
                         isImmersiveSpaceOpen = true
