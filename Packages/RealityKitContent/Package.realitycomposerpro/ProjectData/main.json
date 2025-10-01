@@ -1,11 +1,13 @@
 {
   "pathsToIds" : {
     "\/RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Cube.usda" : "9DD882B9-1E14-40B7-B211-1817915B6D9C",
+    "RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Cube.usda" : "A11D99D3-89A7-4709-94A1-E42DE9717D04",
     "RealityKitContent\/Sources\/RealityKitContent\/RealityKitContent.rkassets\/Immersive.usda" : "C6A7F375-BFE9-46E0-9EA6-1A6B150F43FD"
   },
   "projectID" : -1957373779216416045,
   "uuidToIntID" : {
     "9DD882B9-1E14-40B7-B211-1817915B6D9C" : 3007217462864628103,
+    "A11D99D3-89A7-4709-94A1-E42DE9717D04" : 7703198080796128687,
     "C6A7F375-BFE9-46E0-9EA6-1A6B150F43FD" : -3279830473159039210
   }
 }
