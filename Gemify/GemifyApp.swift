@@ -12,6 +12,7 @@ import RealityKitContent
 @main
 struct GemifyApp: App {
     @State private var selectedImmersionStyle: ImmersionStyle = .mixed
+    @State private var appModel = AppModel()
 
     init() {
         RealityKitContent.GestureComponent.registerComponent()
@@ -19,8 +20,16 @@ struct GemifyApp: App {
     
     var body: some SwiftUI.Scene {
         
+        WindowGroup {
+            MenuView()
+                .environment(appModel)
+        }
+        .windowStyle(.plain)
+        .defaultSize(width: 350, height: 600)
+        
         ImmersiveSpace {
-            ImmersiveView()
+           ImmersiveView()
         }
     }
 }
+
