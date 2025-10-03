@@ -17,7 +17,7 @@ extension Entity {
            rotationSpeed: Float = .pi / 3,
            shakeAmplitude: Float = 0.01,
            shakeFrequency: Float = 3,
-           axis: SIMD3<Float> = [0,1,0]
+           axis: SIMD3<Float> = [0.07,1,0.07]
     ) {
         stopDancing() // ensure no duplicate subscription
         
@@ -27,7 +27,7 @@ extension Entity {
         }
         
         var time: Float = 0
-        let initialPosition = self.position
+        let initialTransform = self.transform
         
         let cancellable = scene.subscribe(to: SceneEvents.Update.self) { [weak self] event in
             guard let self = self else { return }
@@ -41,9 +41,10 @@ extension Entity {
             let yOffset = shakeAmplitude * sin(shakeFrequency * time)
             
             // Apply transform
-            var t = self.transform
-            t.rotation = rotation
-            t.translation.y = initialPosition.y + yOffset
+            var t = initialTransform
+            t.rotation = rotation * initialTransform.rotation
+            t.translation = initialTransform.translation + SIMD3<Float>(0, yOffset, 0)
+            //t.translation.y = initialPosition.y + yOffset
             self.transform = t
         }
         

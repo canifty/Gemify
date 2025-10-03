@@ -10,7 +10,7 @@ import RealityKit
 import RealityKitContent
 
 struct ImmersiveView: View {
-    
+    @State var entityState: Entity?
     var body: some View {
         RealityView { content in
             if let entity = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
@@ -23,6 +23,7 @@ struct ImmersiveView: View {
                     filter: CollisionFilter(group: .all, mask: .all)))
                 
                 content.add(entity)
+                entityState = entity
             } else {
                 print("no object")
             }
@@ -31,6 +32,13 @@ struct ImmersiveView: View {
             
         }
         .installGestures()
+        
+        Button("Start"){
+            entityState?.startDancing(in: entityState?.scene)
+        }
+        Button("Stop") {
+            entityState?.stopDancing()
+        }
     }
 }
 
