@@ -1,3 +1,11 @@
+//
+//  CubeImmersiveView.swift
+//  Gemify
+//
+//  Created by Can Dindar on 30/09/25.
+//
+
+
 import SwiftUI
 import RealityKit
 import RealityKitContent
@@ -6,7 +14,7 @@ struct ImmersiveView: View {
 
     var body: some View {
         RealityView { content in
-            // Load and add Cone
+            
             if let cone = try? await Entity(named: "Cone", in: realityKitContentBundle) {
                 cone.components.set(GestureComponent())
                 cone.components.set(InputTargetComponent())
@@ -16,11 +24,11 @@ struct ImmersiveView: View {
                     shapes: [ShapeResource.generateBox(size: size)]
                 ))
                 content.add(cone)
+                
             } else {
                 print("Cone not found!!")
             }
-
-            // Load and add Diamond
+            
             if let diamond = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
                 diamond.components.set(GestureComponent())
                 diamond.components.set(InputTargetComponent())
