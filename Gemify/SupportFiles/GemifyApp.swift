@@ -5,28 +5,27 @@
 //  Created by Can Dindar on 30/09/25.
 //
 
-import SwiftUI
 import RealityKit
 import RealityKitContent
+import SwiftUI
 
 @main
-struct GemifyApp: App {
-        
+struct GemsApp: App {
     @State private var appModel = AppModel()
-    
-    init() {
-        RealityKitContent.GestureComponent.registerComponent()
-    }
     
     var body: some SwiftUI.Scene {
         
-        WindowGroup(id: "MenuView") {
-            MenuView(elements: elements)
-        }
-        .defaultSize(width: 500, height: 600)
-        
         ImmersiveSpace(id: "ImmersiveSpace") {
             ImmersiveView()
+                .environment(appModel)
         }
+        .immersionStyle(selection: .constant(.mixed), in: .mixed)
+        
+        WindowGroup(id: "MenuWindow") {
+            MenuView()
+                .environment(appModel)
+        }
+        .windowStyle(.plain)
+        .defaultSize(width: 400, height: 600)
     }
 }

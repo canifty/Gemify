@@ -27,3 +27,5 @@ func formedGemstones(from elements: [Element]) -> [String] {
         .filter { $0.recipe.isSubset(of: inputSet) }
         .map { $0.name }
 }
+
+
