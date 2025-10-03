@@ -33,7 +33,7 @@ struct GemsApp: App {
     
     var body: some SwiftUI.Scene {
         ImmersiveSpace(id: "ImmersiveSpace") {
-            ImmersiveSpaceView()
+            ImmersiveView()
                 .environment(appModel)
         }
         .immersionStyle(selection: .constant(.mixed), in: .mixed)
