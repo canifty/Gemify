@@ -15,38 +15,47 @@ struct MenuView: View {
     let columns = Array(repeating: GridItem(.fixed(120), spacing: 20), count: 3)
     
     var body: some View {
-
+        
         LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(elements) { element in
-                    Button {
-                        print(element.name)
-                    } label: {
-                        VStack(alignment: .leading, spacing: 4) {
+            ForEach(elements) { element in
+                Button {
+                    print("\(element.name)")
+                } label: {
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
                             Text("\(element.atomicNumber)")
                                 .font(.caption)
                             
-                            Text(element.symbol)
-                                .font(.title2)
-                                .bold()
-                                .frame(maxWidth: .infinity)
+                            Spacer()
                             
-                            Text(element.name)
+                            Text(element.symbol)
                                 .font(.caption2)
+                                .bold()
                         }
-                        .padding()
-                        .frame(width: 120)
-                        .cornerRadius(10)
-                        .glassBackgroundEffect()
+                        RealityView { content in
+//                            change name with the element.name 
+                            if let entity = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
+                                entity.scale = SIMD3<Float>(repeating: 0.1)
+                                content.add(entity)
+                            }
+                        }
+                        Text(element.name)
+                            .font(.caption2)
                     }
-                    .buttonStyle(.plain)
+                    .padding()
+//                    .frame(width: 120, height: 120)
+                    .cornerRadius(10)
+                    .glassBackgroundEffect()
                 }
+                .buttonStyle(.plain)
             }
-            .background(.ultraThickMaterial)
-            .padding()
+        }
+        .padding()
+//        .background(.ultraThickMaterial)
     }
 }
 
-#Preview(windowStyle: .plain) {
+#Preview {
     MenuView(elements: elements)
     
 }
