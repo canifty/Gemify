@@ -96,5 +96,4 @@ struct ImmersiveSpaceView: View {
 
 #Preview {
     ImmersiveView()
-        .environment(AppModel())
 }
