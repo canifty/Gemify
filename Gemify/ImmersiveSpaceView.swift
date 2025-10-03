@@ -5,6 +5,8 @@
 //  Created by Gizem Coskun on 03/10/25.
 //
 
+// TODO: Delete this file
+
 import SwiftUI
 import RealityKit
 import RealityKitContent
