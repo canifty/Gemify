@@ -8,7 +8,7 @@
 import Foundation
 
 enum Element {
-    case oxigen, aluminum, silicon, hydrogen, magnesium, carbon, beryllium, calcium, fluorine, phosphorus, zirconium, boron, lithium, sodium, copper
+    case oxygen, aluminum, silicon, hydrogen, magnesium, carbon, beryllium, calcium, fluorine, phosphorus, zirconium, boron, lithium, sodium, copper
 }
 
 struct Gemstone {
@@ -27,3 +27,5 @@ func formedGemstones(from elements: [Element]) -> [String] {
         .filter { $0.recipe.isSubset(of: inputSet) }
         .map { $0.name }
 }
+
+
