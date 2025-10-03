@@ -13,13 +13,18 @@ extension Entity {
     private static var dancingSubscriptions: [ObjectIdentifier: AnyCancellable] = [:]
     
     func startDancing(
-           in scene: RealityKit.Scene,
+           in scene: RealityKit.Scene?,
            rotationSpeed: Float = .pi / 3,
            shakeAmplitude: Float = 0.01,
            shakeFrequency: Float = 3,
            axis: SIMD3<Float> = [0,1,0]
     ) {
         stopDancing() // ensure no duplicate subscription
+        
+        guard let scene = scene else {
+            print("Warning: Entity not in a scene yet!")
+            return
+        }
         
         var time: Float = 0
         let initialPosition = self.position
