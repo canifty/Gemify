@@ -10,7 +10,6 @@ import RealityKitContent
 import SwiftUI
 
 
-
 //@main
 //struct GemifyApp: App {
 //    @State private var selectedImmersionStyle: ImmersionStyle = .mixed
@@ -28,7 +27,6 @@ import SwiftUI
 //}
 
 
-// MARK: - App Entry Point
 @main
 struct GemsApp: App {
     @State private var appModel = AppModel()

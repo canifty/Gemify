@@ -86,7 +86,6 @@ struct ImmersiveSpaceView: View {
         .task {
             if !hasOpenedMenu {
                 hasOpenedMenu = true
-                print("🪟 Opening menu window")
                 openWindow(id: "MenuWindow")
             }
         }
