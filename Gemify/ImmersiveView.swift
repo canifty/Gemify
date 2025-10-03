@@ -13,48 +13,31 @@ import Combine
 struct ImmersiveView: View {
     @State private var diamondEntity: Entity?
     @State private var diamondEntity2: Entity?
+    @State private var elementEntities: [String: Entity] = [:]
     
     var body: some View {
         ZStack {
             RealityView { content in
                 
-                // Create Diamond 1
-                if let entity = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
-                    
-                    entity.name = "DiamondTest"
-                    entity.components.set(GestureComponent())
-                    entity.components.set(InputTargetComponent())
-                    entity.components.set(CollisionComponent(
-                        shapes: [ShapeResource.generateBox(size: [0.1, 0.1, 0.1])],
-                        mode: .default,
-                        filter: CollisionFilter(group: .all, mask: .all)))
-                    entity.position = [-0.5,1.0,-1.0]
-                    content.add(entity)
-                    
-                    diamondEntity = entity
-                
-                } else {
-                    print("no object")
-                }
-                
-                // Create Diamond 2
-                if let entity2 = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
-                    
-                    entity2.name = "DiamondTest2"
-                    entity2.components.set(GestureComponent())
-                    entity2.components.set(InputTargetComponent())
-                    entity2.components.set(CollisionComponent(
-                        shapes: [ShapeResource.generateBox(size: [0.1, 0.1, 0.1])],
-                        mode: .default,
-                        filter: CollisionFilter(group: .all, mask: .all)))
-                    entity2.position = [0.5,1.0,-1.0]
-                    content.add(entity2)
-                    
-                    diamondEntity2 = entity2
-                
-                } else {
-                    print("no object")
-                }
+                let elements = ["oxygen", "aluminum", "silicon","hydrogen","magnesium", "carbon","beryllium", "calcium"]
+
+                    for (i, name) in elements.enumerated() {
+                        if let entity = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
+                            entity.name = name
+                            entity.components.set(GestureComponent())
+                            entity.components.set(InputTargetComponent())
+                            entity.components.set(CollisionComponent(
+                                shapes: [ShapeResource.generateBox(size: [0.1, 0.1, 0.1])],
+                                mode: .default,
+                                filter: CollisionFilter(group: .all, mask: .all)))
+                            
+                            
+                            entity.position = [Float(i) * 0.3 - 0.5, 1.0, -1.0]
+                            
+                            content.add(entity)
+                            elementEntities[name] = entity
+                        }
+                    }
                 
                 /* Create the outline of the box programmatically. The coordinates are
                  
@@ -96,36 +79,18 @@ struct ImmersiveView: View {
 
             }
             .installGestures()
+            .onAppear {
+                
+            }
+            
             
             Button {
-                /*
-                if let diamond = diamondEntity {
-                    print("\(diamond.position)")
-                } else {
-                    print("cazzo")
+                let insideElements = elementEntities.compactMap { name, entity in
+                    return isInsideCube(entity.position) ? name : nil
                 }
-                 */
+
+                print("Inside cube: \(insideElements)")
                 
-                // Detect if both diamonds are inside the box.
-                if let diamond = diamondEntity,
-                      let diamond2 = diamondEntity2 {
-                       
-                       let inside1 = isInsideCube(diamond.position)
-                       let inside2 = isInsideCube(diamond2.position)
-                       
-                       if inside1 && inside2 {
-                           print("✅ Both diamonds are inside the cube!")
-                       } else if inside1 {
-                           print("🔴 Only diamond 1 is inside")
-                       } else if inside2 {
-                           print("🔴 Only diamond 2 is inside")
-                       } else {
-                           print("❌ Both are outside")
-                       }
-                       
-                   } else {
-                       print("One or both diamonds are missing")
-                   }
             } label: {
                 Text("Get Position")
                     .font(.largeTitle)
