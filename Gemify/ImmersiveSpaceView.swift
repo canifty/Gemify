@@ -16,16 +16,6 @@ struct ImmersiveSpaceView: View {
     
     var body: some View {
         RealityView { content in
-            
-            let ambientLight = PointLight()
-            ambientLight.light.intensity = 5000
-            ambientLight.position = [0, 2, 0]
-            content.add(ambientLight)
-            
-            let directionalLight = DirectionalLight()
-            directionalLight.light.intensity = 1000
-            directionalLight.look(at: [0, 0, 0], from: [1, 1, 1], relativeTo: nil)
-            content.add(directionalLight)
                         
             let modelsContainer = Entity()
             modelsContainer.name = "ModelsContainer"
