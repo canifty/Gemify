@@ -8,7 +8,7 @@
 import Foundation
 
 enum Element {
-    case oxigen, aluminum, silicon, hydrogen, magnesium, carbon, beryllium, calcium, fluorine, phosphorus, zirconium, boron, lithium, sodium, copper
+    case oxygen, aluminum, silicon, hydrogen, magnesium, carbon, beryllium, calcium, fluorine, phosphorus, zirconium, boron, lithium, sodium, copper
 }
 
 struct Gemstone {
