@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
+
 // MARK: - Menu Model View
 struct MenuModelView: View {
     let modelName: String
@@ -23,7 +24,7 @@ struct MenuModelView: View {
                     scene.scale = SIMD3<Float>(repeating: 0.3)
                     content.add(scene)
                 } catch {
-                    print("Error loading \(modelName): \(error.localizedDescription)")
+                    print("Error loading preview \(modelName): \(error.localizedDescription)")
                 }
             }
             .frame(width: 200, height: 200)
@@ -31,6 +32,7 @@ struct MenuModelView: View {
             
             Text(displayName)
                 .font(.headline)
+            
             Button {
                 onAdd()
             } label: {
@@ -43,9 +45,3 @@ struct MenuModelView: View {
         .cornerRadius(12)
     }
 }
-
-#Preview {
-    MenuView()
-        .environment(AppModel())
-}
-

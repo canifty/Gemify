@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 
 
+// MARK: - Supporting Types
 struct DroppedModel: Identifiable {
     let id = UUID()
     var modelName: String
@@ -19,6 +20,8 @@ struct ModelIDComponent: Component {
     let id: UUID
 }
 
+
+// MARK: - Shared App Model
 @Observable
 class AppModel {
     var droppedModels: [DroppedModel] = []
@@ -29,6 +32,7 @@ class AppModel {
             position: SIMD3<Float>(0, 1.5, -1.5)
         )
         droppedModels.append(newModel)
+        print("✅ Added \(modelName) to models array")
     }
     
     func updateModelPosition(id: UUID, position: SIMD3<Float>) {
@@ -36,4 +40,9 @@ class AppModel {
             droppedModels[index].position = position
         }
     }
+    
+    func removeModel(id: UUID) {
+        droppedModels.removeAll { $0.id == id }
+    }
 }
+

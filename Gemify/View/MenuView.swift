@@ -9,12 +9,9 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-// MARK: - Menu Window View
 struct MenuView: View {
     @Environment(AppModel.self) private var appModel
-    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
-    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
-    @State private var isImmersiveSpaceOpen = false
+    @Environment(\.openWindow) private var openWindow
     
     var body: some View {
         VStack(spacing: 0) {
@@ -22,29 +19,6 @@ struct MenuView: View {
                 Text("Objects Menu")
                     .font(.title2)
                     .padding(.top)
-                
-                Toggle(isOn: $isImmersiveSpaceOpen) {
-                    Label(
-                        isImmersiveSpaceOpen ? "Close Drop Zone" : "Open Drop Zone",
-                        systemImage: isImmersiveSpaceOpen ? "eye.slash" : "eye"
-                    )
-                }
-                .toggleStyle(.button)
-                .padding()
-                .onChange(of: isImmersiveSpaceOpen) { _, newValue in
-                    print("🔄 Toggle changed to: \(newValue)")
-                    Task {
-                        if newValue {
-                            print("🚀 Opening immersive space...")
-                            await openImmersiveSpace(id: "DropZone")
-                            print("✅ Immersive space opened")
-                        } else {
-                            print("🚪 Closing immersive space...")
-                            await dismissImmersiveSpace()
-                            print("✅ Immersive space closed")
-                        }
-                    }
-                }
             }
             
             Divider()
@@ -60,13 +34,20 @@ struct MenuView: View {
                     )
                     
                     MenuModelView(
-                        modelName: "Diamondtest",
-                        displayName: "Diamond",
+                        modelName: "Panchito",
+                        displayName: "Panchito",
                         onAdd: {
-                            appModel.addModel("Diamondtest")
+                            appModel.addModel("Panchito")
                         }
                     )
-                   
+                    
+                    MenuModelView(
+                        modelName: "Gizem",
+                        displayName: "Gizem",
+                        onAdd: {
+                            appModel.addModel("Gizem")
+                        }
+                    )
                 }
                 .padding()
             }
