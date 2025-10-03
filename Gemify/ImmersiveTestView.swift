@@ -10,7 +10,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-struct ImmersiveView: View {
+struct ImmersiveTestView: View {
 
     var body: some View {
         RealityView { content in
@@ -50,5 +50,5 @@ struct ImmersiveView: View {
 }
 
 #Preview {
-    ImmersiveView()
+    ImmersiveTestView()
 }

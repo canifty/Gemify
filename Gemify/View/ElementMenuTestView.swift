@@ -9,7 +9,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-struct MenuView: View {
+struct ElementMenuView: View {
     let elements: [Elements]
     
     let columns = Array(repeating: GridItem(.fixed(120), spacing: 20), count: 3)
@@ -56,6 +56,6 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView(elements: elements)
+    ElementMenuView(elements: elements)
     
 }
