@@ -2,7 +2,8 @@
   "advancedEditorSelectedIdentifier" : "ProjectBrowser",
   "openSceneRelativePaths" : [
     "Immersive.usda",
-    "Cone.usda"
+    "Cone.usda",
+    "Metronome.usda"
   ],
   "recentIdentifiers" : {
     "0AC7CD27-7CF1-4174-B569-2761D533919C" : [
@@ -243,6 +244,30 @@
           0.43211764,
           0.25155008,
           0.05664574,
+          1
+        ]
+      }
+    ],
+    "0F3018F0-6514-4433-8EB8-9F7AA9C188DB" : [
+      {
+        "date" : 781194945.677776,
+        "title" : "Untitled",
+        "transform" : [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0.7071069,
+          -0.70710677,
+          0,
+          0,
+          0.70710677,
+          0.7071069,
+          0,
+          0,
+          0.3742306,
+          0.37423062,
           1
         ]
       }
@@ -587,5 +612,5 @@
   "sceneViewportBackgroundColors" : {
 
   },
-  "selectedSceneRelativePath" : "Cone.usda"
+  "selectedSceneRelativePath" : "Metronome.usda"
 }

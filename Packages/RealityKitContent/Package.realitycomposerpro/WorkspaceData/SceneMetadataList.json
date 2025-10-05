@@ -20,6 +20,192 @@
       }
     ]
   },
+  "0F3018F0-6514-4433-8EB8-9F7AA9C188DB" : {
+    "objectMetadataList" : [
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model",
+        "root",
+        "GLTF_SceneRootNode",
+        "Markings_2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model",
+        "root",
+        "GLTF_SceneRootNode",
+        "Tige_1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model",
+        "root",
+        "GLTF_SceneRootNode",
+        "M______tronome_0"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model",
+        "root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model",
+        "root",
+        "GLTF_SceneRootNode"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "9D6F6E39-B757-4FF7-9998-16582D6D0BB7" : {
+    "objectMetadataList" : [
+      [
+        "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
+        "Root",
+        "Vintage_Metronome"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model",
+        "root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model",
+        "root",
+        "GLTF_SceneRootNode"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
   "9DD882B9-1E14-40B7-B211-1817915B6D9C" : {
     "objectMetadataList" : [
       [
@@ -36,7 +222,8 @@
     "objectMetadataList" : [
       [
         "A11D99D3-89A7-4709-94A1-E42DE9717D04",
-        "Root"
+        "Root",
+        "Cube"
       ],
       {
         "isExpanded" : true,
@@ -44,8 +231,7 @@
       },
       [
         "A11D99D3-89A7-4709-94A1-E42DE9717D04",
-        "Root",
-        "Cube"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -82,10 +268,10 @@
       [
         "C6A7F375-BFE9-46E0-9EA6-1A6B150F43FD",
         "Root",
-        "Video_Dock"
+        "Video_Dock",
+        "Ground"
       ],
       {
-        "disallowsFraming" : false,
         "isExpanded" : true,
         "isLocked" : false
       },
@@ -111,17 +297,17 @@
       [
         "C6A7F375-BFE9-46E0-9EA6-1A6B150F43FD",
         "Root",
-        "Video_Dock",
-        "Ground"
+        "SkyDome"
       ],
       {
+        "disallowsFraming" : false,
         "isExpanded" : true,
         "isLocked" : false
       },
       [
         "C6A7F375-BFE9-46E0-9EA6-1A6B150F43FD",
         "Root",
-        "SkyDome"
+        "Video_Dock"
       ],
       {
         "disallowsFraming" : false,
@@ -134,7 +320,8 @@
     "objectMetadataList" : [
       [
         "CFFCEAE4-04C4-4596-AEB3-06134696E6B0",
-        "Root"
+        "Root",
+        "Cone"
       ],
       {
         "isExpanded" : true,
@@ -142,8 +329,7 @@
       },
       [
         "CFFCEAE4-04C4-4596-AEB3-06134696E6B0",
-        "Root",
-        "Cone"
+        "Root"
       ],
       {
         "isExpanded" : true,
