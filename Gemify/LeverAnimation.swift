@@ -9,8 +9,9 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-// TODO: WHEN ANIMATION ENDS DISPLAY THE GEM
-
+/* TODO: WHEN ANIMATION ENDS DISPLAY THE GEM
+ - detect when animation ends
+*/
 struct LeverAnimation: View {
     
     @State private var isAnimating = false
