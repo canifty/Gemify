@@ -76,6 +76,7 @@ struct ImmersiveView: View {
                 if let idComponent = entity.components[ModelIDComponent.self],
                    !currentIds.contains(idComponent.id) {
                     entity.removeFromParent()
+                    elementEntities.removeValue(forKey: entity.name)
                 }
             }
             
@@ -101,6 +102,7 @@ struct ImmersiveView: View {
                             scene.components.set(ModelIDComponent(id: model.id))
                             
                             modelsContainer.addChild(scene)
+                            elementEntities[model.modelName] = scene
                         } catch {
                             print("Error loading \(model.modelName): \(error.localizedDescription)")
                         }
@@ -127,8 +129,9 @@ struct ImmersiveView: View {
         .buttonStyle(.borderedProminent)
         
         Button {
+            
             let insideElements = elementEntities.compactMap { name, entity in
-                return isInsideCube(entity.position) ? name : nil
+                return isInsideCube(entity.position(relativeTo: nil)) ? name : nil
             }
             
             print("Inside cube: \(insideElements)")
