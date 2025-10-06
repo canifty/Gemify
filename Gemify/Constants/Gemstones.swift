@@ -8,6 +8,7 @@
 import SwiftUI
 
 let allGemstones: [Gemstone] = [Gemstone(name: "Diamond", recipe: [.carbon]),
+
                                 Gemstone(name: "Amethyst", recipe: [.oxigen, .silicon]),
                                 Gemstone(name: "Ruby", recipe: [.aluminum, .oxigen]),
                                 Gemstone(name: "Sapphire", recipe: [.aluminum, .oxigen]),
@@ -49,4 +50,5 @@ let elements: [Elements] = [
     Elements(name: "Lithium", symbol: "Li", atomicNumber: 3),
     Elements(name: "Sodium", symbol: "Na", atomicNumber: 11)
 ]
+
 
