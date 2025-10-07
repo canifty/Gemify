@@ -10,20 +10,33 @@ import RealityKit
 import RealityKitContent
 
 struct ImmersiveView: View {
-    @State var entityState: Entity?
+    @State private var parentEntity: Entity?
+    @State private var childEntity: Entity?
+
     var body: some View {
         RealityView { content in
-            if let entity = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
+            // Create parent and child entities
+            let parent = Entity()
+            if let diamond = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
                 
-                entity.components.set(GestureComponent())
-                entity.components.set(InputTargetComponent())
-                entity.components.set(CollisionComponent(
+                // Enable gestures on the parent, not the child
+                parent.components.set(GestureComponent())
+                parent.components.set(InputTargetComponent())
+                parent.components.set(CollisionComponent(
                     shapes: [ShapeResource.generateBox(size: [0.1, 0.1, 0.1])],
                     mode: .default,
-                    filter: CollisionFilter(group: .all, mask: .all)))
+                    filter: CollisionFilter(group: .all, mask: .all)
+                ))
                 
-                content.add(entity)
-                entityState = entity
+                // Attach child (animated) entity
+                parent.addChild(diamond)
+                
+                // Add to scene
+                content.add(parent)
+                
+                // Store references
+                parentEntity = parent
+                childEntity = diamond
             } else {
                 print("no object")
             }
@@ -33,12 +46,15 @@ struct ImmersiveView: View {
         }
         .installGestures()
         
-        Button("Start"){
-            entityState?.startDancing(in: entityState?.scene)
+        VStack {
+            Button("Start Dancing") {
+                childEntity?.startDancing(in: parentEntity?.scene)
+            }
+            Button("Stop Dancing") {
+                childEntity?.stopDancing()
+            }
         }
-        Button("Stop") {
-            entityState?.stopDancing()
-        }
+        .padding()
     }
 }
 
