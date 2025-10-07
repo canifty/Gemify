@@ -9,29 +9,12 @@ import RealityKit
 import RealityKitContent
 import SwiftUI
 
-
-//@main
-//struct GemifyApp: App {
-//    @State private var selectedImmersionStyle: ImmersionStyle = .mixed
-//
-//    init() {
-//        RealityKitContent.GestureComponent.registerComponent()
-//    }
-//    
-//    var body: some SwiftUI.Scene {
-//        
-//        ImmersiveSpace {
-//            ImmersiveView()
-//        }
-//    }
-//}
-
-
 @main
 struct GemsApp: App {
     @State private var appModel = AppModel()
     
     var body: some SwiftUI.Scene {
+        
         ImmersiveSpace(id: "ImmersiveSpace") {
             ImmersiveView()
                 .environment(appModel)

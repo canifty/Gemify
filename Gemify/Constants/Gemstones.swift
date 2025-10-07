@@ -5,7 +5,7 @@
 //  Created by Francisco Mestizo on 30/09/25.
 //
 
-import Foundation
+import SwiftUI
 
 struct Gemstone: Identifiable {
     let id = UUID()
