@@ -93,6 +93,7 @@ struct ImmersiveView: View {
                             elementEntity.position = model.position
                             elementEntity.components.set(ModelIDComponent(id: model.id))
                             modelsContainer.addChild(elementEntity)
+                            elementEntities[model.modelName] = elementEntity
                         } else {
                             // Load 3D model
                             do {
@@ -110,6 +111,8 @@ struct ImmersiveView: View {
                                 scene.components.set(ModelIDComponent(id: model.id))
                                 
                                 modelsContainer.addChild(scene)
+                                
+                                elementEntities[model.modelName] = scene
                             } catch {
                                 print("Error loading \(model.modelName): \(error.localizedDescription)")
                             }
@@ -147,7 +150,8 @@ struct ImmersiveView: View {
         .buttonStyle(.borderedProminent)
         
         Button {
-            
+            print(appModel.droppedModels)
+            print(elementEntities)
             let insideElements = elementEntities.compactMap { name, entity in
                 return isInsideCube(entity.position(relativeTo: nil)) ? name : nil
             }
