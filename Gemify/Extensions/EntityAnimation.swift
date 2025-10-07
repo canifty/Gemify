@@ -12,7 +12,7 @@ import Combine
 extension Entity {
     private static var dancingSubscriptions: [ObjectIdentifier: AnyCancellable] = [:]
     
-    func startDancing(
+    public func startDancing(
            in scene: RealityKit.Scene?,
            rotationSpeed: Float = .pi / 3,
            shakeAmplitude: Float = 0.01,
@@ -43,7 +43,7 @@ extension Entity {
             // Apply transform
             var t = initialTransform
             t.rotation = rotation * initialTransform.rotation
-            t.translation = initialTransform.translation + SIMD3<Float>(0, yOffset, 0)
+            t.translation.y = initialTransform.translation.y + yOffset
             //t.translation.y = initialPosition.y + yOffset
             self.transform = t
         }
@@ -52,7 +52,7 @@ extension Entity {
         
     }
     
-    func stopDancing() {
+    public func stopDancing() {
             Entity.dancingSubscriptions[ObjectIdentifier(self)] = nil
         }
 }
