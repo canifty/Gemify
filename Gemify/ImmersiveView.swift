@@ -163,9 +163,11 @@ struct ImmersiveView: View {
             
             let resultingGem = Gemify.createGem(from: elements)
 
-            print(elements.map(\.name))
+            // print(elements.map(\.name))
             
-            let gemToCreate = ["Diamondtest"]
+            print("💎 GEMSTONE: \(resultingGem?.name ?? "NO GEM")")
+            
+            let gemToCreate = [resultingGem?.name ?? ""]
                 
             Task { @MainActor in
                 await MainActor.run {
@@ -226,7 +228,7 @@ struct ImmersiveView: View {
     }
     
     func preloadEntities() async {
-        let names = ["Diamondtest", "Panchito"]
+        let names = ["Diamondtest", "Panchito", "Diamond", "Sapphire"]
         
         for name in names {
             if let entity = try? await Entity(named: name, in: realityKitContentBundle) {
