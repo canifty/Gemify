@@ -24,12 +24,12 @@ struct Gemstone: Identifiable {
 // MARK: - Gemstone Data
 let allGemstones: [Gemstone] = [
     Gemstone(name: "Diamond", recipe: [.carbon]),
-    Gemstone(name: "Amethyst", recipe: [.oxygen, .silicon]),
+    // Gemstone(name: "Amethyst", recipe: [.oxygen, .silicon]),
     // Gemstone(name: "Ruby", recipe: [.aluminum, .oxygen]), // PEnding to see if this stays
     Gemstone(name: "Sapphire", recipe: [.aluminum, .oxygen]),
-    Gemstone(name: "Pearl", recipe: [.calcium, .carbon, .oxygen]),
+    // Gemstone(name: "Pearl", recipe: [.calcium, .carbon, .oxygen]),
     Gemstone(name: "Opal", recipe: [.hydrogen, .oxygen, .silicon]),
-    Gemstone(name: "Peridot", recipe: [.magnesium, .oxygen, .silicon]),
+    // Gemstone(name: "Peridot", recipe: [.magnesium, .oxygen, .silicon]),
     Gemstone(name: "Alexandrite", recipe: [.aluminum, .beryllium, .oxygen]),
     Gemstone(name: "Emerald", recipe: [.aluminum, .beryllium, .oxygen, .silicon]),
     Gemstone(name: "Aquamarine", recipe: [.aluminum, .beryllium, .oxygen, .silicon]),

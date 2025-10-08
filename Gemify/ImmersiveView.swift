@@ -65,7 +65,7 @@ struct ImmersiveView: View {
             
             if createGem {
                 convertElementsToGem(in: &content, from: objectsToDelete, create: objectsToAdd)
-                // createGem = false
+                createGem = false
             }
             
             guard let modelsContainer = content.entities.first(where: { $0.name == "ModelsContainer" }) else {
@@ -151,8 +151,8 @@ struct ImmersiveView: View {
         .buttonStyle(.borderedProminent)
         
         Button {
-            print(appModel.droppedModels)
-            print(elementEntities)
+            // print(appModel.droppedModels)
+            // print(elementEntities)
             let insideElements = elementEntities.compactMap { name, entity in
                 return isInsideCube(entity.position(relativeTo: nil)) ? name : nil
             }
@@ -202,13 +202,14 @@ struct ImmersiveView: View {
                 elementEntities.removeValue(forKey: name)
                 
                 // 🧩 Remove from appModel
-                if let idComponent = e.components[ModelIDComponent.self] {
-                    appModel.removeModel(id: idComponent.id)
-                    print("🗑️ Removed \(name) from appModel")
-                } else {
-                    // Fallback: remove by modelName
-                    appModel.droppedModels.removeAll { $0.modelName == name }
-                    print("🗑️ Removed \(name) by modelName")
+                DispatchQueue.main.async {
+                    if let idComponent = e.components[ModelIDComponent.self] {
+                        appModel.removeModel(id: idComponent.id)
+                        print("🗑️ Removed \(name) from appModel (async)")
+                    } else {
+                        appModel.droppedModels.removeAll { $0.modelName == name }
+                        print("🗑️ Removed \(name) by modelName (async)")
+                    }
                 }
             } else {
                 print("⚠️ \(name) not found in container")
@@ -228,7 +229,7 @@ struct ImmersiveView: View {
     }
     
     func preloadEntities() async {
-        let names = ["Diamondtest", "Panchito", "Diamond", "Sapphire"]
+        let names = ["Diamondtest", "Panchito", "Diamond", "Ruby", "Opal", "Alexandrite", "Emerald", "Aquamarine", "Garnet", "Spinel", "Topaz", "Turquoise", "Zircon", "Tourmaline"]
         
         for name in names {
             if let entity = try? await Entity(named: name, in: realityKitContentBundle) {
