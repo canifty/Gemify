@@ -81,20 +81,23 @@ struct ImmersiveView: View {
             }
             
             for model in appModel.droppedModels {
-                if let existingEntity = modelsContainer.children.first(where: { entity in
-                    entity.components[ModelIDComponent.self]?.id == model.id
-                }) {
-                    //existingEntity.position = model.position
-                } else {
-                    Task { @MainActor in
-                        if model.isProceduralElement, let elementData = model.elementData {
-                            // Create procedural element
-                            let elementEntity = createProceduralElement(elementData)
-                            elementEntity.position = model.position
-                            elementEntity.components.set(ModelIDComponent(id: model.id))
-                            modelsContainer.addChild(elementEntity)
-                            elementEntities[model.modelName] = elementEntity
-                        } else {
+                   if let existingEntity = modelsContainer.children.first(where: { entity in
+                       entity.components[ModelIDComponent.self]?.id == model.id
+                   }) {
+                       //existingEntity.position = model.position
+                   } else {
+                       Task { @MainActor in
+                           if model.isProceduralElement, let elementData = model.elementData {
+                               print("🧪 Element: \(elementData.name)")
+                               
+                               // Symbol yerine name kullan
+                               let diceEntity = await DiceEntity.create(textureName: elementData.name)
+                               
+                               diceEntity.position = model.position
+                               diceEntity.components.set(ModelIDComponent(id: model.id))
+                               modelsContainer.addChild(diceEntity)
+                               elementEntities[model.modelName] = diceEntity
+                           } else {
                             // Load 3D model
                             do {
                                 let scene = try await Entity(named: model.modelName, in: realityKitContentBundle)
@@ -219,54 +222,9 @@ struct ImmersiveView: View {
         yRange.contains(position.y) &&
         zRange.contains(position.z)
     }
-    
-    private func createProceduralElement(_ element: ChemicalElement) -> Entity {
-        let entity = Entity()
-        
-        // Create sphere for the element
-        let sphere = MeshResource.generateSphere(radius: 0.1)
-        let material = SimpleMaterial(color: getElementColor(element), isMetallic: true)
-        let modelComponent = ModelComponent(mesh: sphere, materials: [material])
-        entity.components.set(modelComponent)
-        
-        // Add text label
-        let textMesh = MeshResource.generateText(
-            element.symbol,
-            extrusionDepth: 0.01,
-            font: .systemFont(ofSize: 0.1, weight: .bold)
-        )
-        let textMaterial = SimpleMaterial(color: .white, isMetallic: false)
-        let textEntity = Entity()
-        textEntity.components.set(ModelComponent(mesh: textMesh, materials: [textMaterial]))
-        textEntity.position = SIMD3<Float>(0, 0.15, 0)
-        entity.addChild(textEntity)
-        
-        // Add interaction components
-        entity.components.set(GestureComponent())
-        entity.components.set(InputTargetComponent())
-        entity.components.set(CollisionComponent(
-            shapes: [.generateSphere(radius: 0.1)],
-            mode: .default,
-            filter: CollisionFilter(group: .all, mask: .all)))
-        
-        return entity
-    }
-    
-    private func getElementColor(_ element: ChemicalElement) -> UIColor {
-        switch element.symbol {
-        case "H": return .systemRed
-        case "Li", "Na", "Ca": return .systemPurple
-        case "Be", "Mg", "Al": return .systemBlue
-        case "B", "C", "Si": return .systemBrown
-        case "O", "F": return .systemGreen
-        case "P": return .systemOrange
-        case "Cu", "Zr": return .systemCyan
-        default: return .systemGray
-        }
-    }
 }
+
 
 #Preview {
     ImmersiveView()
 }
-
