@@ -23,7 +23,6 @@ extension Entity {
         // ✅ If this entity is already dancing, don't start again
         let id = ObjectIdentifier(self)
         guard Entity.dancingSubscriptions[id] == nil else {
-            print("⚠️ \(self.name) is already dancing.")
             return
         }
         stopDancing() // ensure no duplicate subscription
@@ -63,7 +62,6 @@ extension Entity {
         // ✅ Only stop if there’s an active animation for this entity
         let id = ObjectIdentifier(self)
         guard Entity.dancingSubscriptions[id] != nil else {
-            print("⚠️ \(self.name) is not dancing, nothing to stop.")
             return
         }
             Entity.dancingSubscriptions[ObjectIdentifier(self)] = nil
