@@ -11,6 +11,7 @@ import Combine
 
 extension Entity {
     private static var dancingSubscriptions: [ObjectIdentifier: AnyCancellable] = [:]
+    private static var isDancing: Bool = true
     
     public func startDancing(
            in scene: RealityKit.Scene?,
@@ -19,6 +20,12 @@ extension Entity {
            shakeFrequency: Float = 3,
            axis: SIMD3<Float> = [0.07,1,0.07]
     ) {
+        // ✅ If this entity is already dancing, don't start again
+        let id = ObjectIdentifier(self)
+        guard Entity.dancingSubscriptions[id] == nil else {
+            print("⚠️ \(self.name) is already dancing.")
+            return
+        }
         stopDancing() // ensure no duplicate subscription
         
         guard let scene = scene else {
@@ -53,6 +60,12 @@ extension Entity {
     }
     
     public func stopDancing() {
+        // ✅ Only stop if there’s an active animation for this entity
+        let id = ObjectIdentifier(self)
+        guard Entity.dancingSubscriptions[id] != nil else {
+            print("⚠️ \(self.name) is not dancing, nothing to stop.")
+            return
+        }
             Entity.dancingSubscriptions[ObjectIdentifier(self)] = nil
         }
 }
