@@ -9,7 +9,6 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-
 // MARK: - Menu Model View
 struct MenuModelView: View {
     let modelName: String
@@ -45,3 +44,4 @@ struct MenuModelView: View {
         .cornerRadius(12)
     }
 }
+

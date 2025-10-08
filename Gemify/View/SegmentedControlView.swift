@@ -10,10 +10,10 @@ import SwiftUI
 struct SegmentedControlView: View {
     
     @Binding private var selection: String
-
+    
     init(selection: Binding<String>) {
-           self._selection = selection
-       }
+        self._selection = selection
+    }
     
     var body: some View {
         Picker("Options", selection: $selection) {
@@ -21,7 +21,11 @@ struct SegmentedControlView: View {
             Text("Gems").tag("gems")
         }
         .pickerStyle(.segmented)
-        .frame(width: 400)
+        .frame(width: 212)
         .glassBackgroundEffect()
     }
+}
+
+#Preview{
+    SegmentedControlView(selection: .constant("elements"))
 }

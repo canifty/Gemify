@@ -9,31 +9,36 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-/* TODO: WHEN ANIMATION ENDS DISPLAY THE GEM
- - detect when animation ends
-*/
 struct LeverAnimation: View {
     
     @State private var isAnimating = false
+    @State private var showGem = false
+    @State private var subscription: EventSubscription?
     
     var body: some View {
-        
         RealityView { content in
-//            TODO: change lever with original Lever asset
-            if let lever = try? await Entity(named: "Zircon", in:  realityKitContentBundle) {
+
+            if let lever = try? await Entity(named: "Lever", in: realityKitContentBundle) {
                 lever.components.set(GestureComponent())
                 lever.components.set(InputTargetComponent())
+                
                 let meshBounds = lever.visualBounds(relativeTo: nil)
-                let size = meshBounds.extents // actual mesh size
+                let size = meshBounds.extents
                 lever.components.set(CollisionComponent(
                     shapes: [ShapeResource.generateBox(size: size)]
                 ))
+                
                 content.add(lever)
                 
+                subscription = content.subscribe(
+                    to: AnimationEvents.PlaybackCompleted.self,
+                    on: lever
+                ) { event in
+                    showGem = true
+                }
             }
         }
         update: { content in
-            
             guard let lever = content.entities.first else { return }
             
             if isAnimating {
@@ -45,23 +50,36 @@ struct LeverAnimation: View {
             }
         }
         .installGestures()
-        
-        //        when tapped on the lever start/stop the animation
         .gesture(
             SpatialTapGesture()
                 .targetedToAnyEntity()
                 .onEnded { _ in
                     isAnimating.toggle()
+                    if isAnimating {
+                        showGem = false // reset gem when starting
+                    }
                 }
         )
+
+        if showGem {
+            RealityView { content in
+                if let gem = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
+                    gem.components.set(GestureComponent())
+                    gem.components.set(InputTargetComponent())
+                    
+                    let meshBounds = gem.visualBounds(relativeTo: nil)
+                    let size = meshBounds.extents
+                    gem.components.set(CollisionComponent(
+                        shapes: [ShapeResource.generateBox(size: size)]
+                    ))
+                    content.add(gem)
+                }
+            }
+            .installGestures()
+
+        }
     }
 }
-//    @State var subscriptions: [EventSubscription] = []
-//let sub = content.subscribe(to: AnimationEvents.PlaybackCompleted.self,
-//                            on: lever) { event in
-//    print("Animation completed!")
-// subscriptions.append(sub)
-//}
 
 #Preview {
     LeverAnimation()
