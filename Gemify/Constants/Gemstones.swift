@@ -25,7 +25,7 @@ struct Gemstone: Identifiable {
 let allGemstones: [Gemstone] = [
     Gemstone(name: "Diamond", recipe: [.carbon]),
     Gemstone(name: "Amethyst", recipe: [.oxygen, .silicon]),
-    Gemstone(name: "Ruby", recipe: [.aluminum, .oxygen]),
+    // Gemstone(name: "Ruby", recipe: [.aluminum, .oxygen]), // PEnding to see if this stays
     Gemstone(name: "Sapphire", recipe: [.aluminum, .oxygen]),
     Gemstone(name: "Pearl", recipe: [.calcium, .carbon, .oxygen]),
     Gemstone(name: "Opal", recipe: [.hydrogen, .oxygen, .silicon]),
