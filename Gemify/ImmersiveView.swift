@@ -33,6 +33,7 @@ struct ImmersiveView: View {
             content.add(modelsContainer)
             
             // Create the blue cube detection
+            /*
             let step = 0.25
             let radius: Float = 0.02
             
@@ -59,6 +60,12 @@ struct ImmersiveView: View {
                     }
                 }
             }
+             */
+            
+            let boardMixer = try! await Entity(named: "BoardMixer", in: realityKitContentBundle)
+            boardMixer.position = [0.0, 0.0, -2.5] // Center it
+            boardMixer.scale = SIMD3<Float>(0.5, 0.5, 0.5)
+            content.add(boardMixer)
             
         } update: { content in
             guard loaded else { return }
@@ -249,6 +256,14 @@ struct ImmersiveView: View {
                 print("❌ Failed to load \(name)")
             }
         }
+        
+        if let entityBoardMixer = try? await Entity(named: "BoardMixer", in: realityKitContentBundle) {
+            entityBoardMixer.name = "BoardMixer"
+
+            preloaded["BoardMixer"] = entityBoardMixer
+        } else {
+            print("❌ Failed to load \("BoardMixer")")
+        }
     }
     
     // Function that checks if an object is inside the box.
@@ -312,4 +327,3 @@ struct ImmersiveView: View {
 #Preview {
     ImmersiveView()
 }
-
