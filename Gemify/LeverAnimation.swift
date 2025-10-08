@@ -17,6 +17,7 @@ struct LeverAnimation: View {
     
     var body: some View {
         RealityView { content in
+
             if let lever = try? await Entity(named: "Lever", in: realityKitContentBundle) {
                 lever.components.set(GestureComponent())
                 lever.components.set(InputTargetComponent())

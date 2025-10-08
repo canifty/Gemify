@@ -40,5 +40,5 @@ struct DiceView: View {
 }
 
 #Preview {
-    DiceView(imageName: "carbon")
+    DiceView(imageName: "Carbon")
 }
