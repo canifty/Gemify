@@ -11,7 +11,6 @@ import RealityKitContent
 
 struct ImmersiveView: View {
     @State private var parentEntity: Entity?
-    @State private var childEntity: Entity?
 
     var body: some View {
         RealityView { content in
@@ -36,7 +35,6 @@ struct ImmersiveView: View {
                 
                 // Store references
                 parentEntity = parent
-                childEntity = diamond
             } else {
                 print("no object")
             }
@@ -48,10 +46,10 @@ struct ImmersiveView: View {
         
         VStack {
             Button("Start Dancing") {
-                childEntity?.startDancing(in: parentEntity?.scene)
+                parentEntity?.children.first?.startDancing(in: parentEntity?.scene)
             }
             Button("Stop Dancing") {
-                childEntity?.stopDancing()
+                parentEntity?.children.first?.stopDancing()
             }
         }
         .padding()
