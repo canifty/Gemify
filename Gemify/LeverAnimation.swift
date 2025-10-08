@@ -27,7 +27,8 @@ struct LeverAnimation: View {
                 lever.components.set(CollisionComponent(
                     shapes: [ShapeResource.generateBox(size: size)]
                 ))
-                
+                lever.transform.rotation = simd_quatf(angle: .pi , axis: [0, 1, 0])
+                lever.scale = SIMD3<Float>(repeating: 0.05)
                 content.add(lever)
                 
                 subscription = content.subscribe(
@@ -40,14 +41,15 @@ struct LeverAnimation: View {
         }
         update: { content in
             guard let lever = content.entities.first else { return }
-            
+             
             if isAnimating {
                 lever.availableAnimations.forEach { animation in
-                    lever.playAnimation(animation, transitionDuration: 3)
+                    lever.playAnimation(animation)
                 }
-            } else {
-                lever.stopAllAnimations()
             }
+//            else {
+//                lever.stopAllAnimations()
+//            }
         }
         .installGestures()
         .gesture(
@@ -61,23 +63,23 @@ struct LeverAnimation: View {
                 }
         )
 
-        if showGem {
-            RealityView { content in
-                if let gem = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
-                    gem.components.set(GestureComponent())
-                    gem.components.set(InputTargetComponent())
-                    
-                    let meshBounds = gem.visualBounds(relativeTo: nil)
-                    let size = meshBounds.extents
-                    gem.components.set(CollisionComponent(
-                        shapes: [ShapeResource.generateBox(size: size)]
-                    ))
-                    content.add(gem)
-                }
-            }
-            .installGestures()
-
-        }
+//        if showGem {
+//            RealityView { content in
+//                if let gem = try? await Entity(named: "Diamond", in: realityKitContentBundle) {
+//                    gem.components.set(GestureComponent())
+//                    gem.components.set(InputTargetComponent())
+//                    
+//                    let meshBounds = gem.visualBounds(relativeTo: nil)
+//                    let size = meshBounds.extents
+//                    gem.components.set(CollisionComponent(
+//                        shapes: [ShapeResource.generateBox(size: size)]
+//                    ))
+//                    content.add(gem)
+//                }
+//            }
+//            .installGestures()
+//
+//        }
     }
 }
 
