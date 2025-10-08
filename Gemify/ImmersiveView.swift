@@ -15,8 +15,8 @@ struct ImmersiveView: View {
     @State private var preloaded: [String:Entity] = [:]
     @State private var loaded = false
     
-    private var objectsToDelete = ["Panchito1", "Panchito2"] // This should be incomming from Faz's work
-    private var objectsToAdd: [String] = ["Diamondtest"] // This should be incomming from Faz's work
+    @State private var objectsToDelete = ["Panchito1", "Panchito2"] // This should be incomming from Faz's work
+    @State private var objectsToAdd: [String] = ["Diamondtest"] // This should be incomming from Faz's work
 
     @Environment(AppModel.self) private var appModel
     @Environment(\.openWindow) private var openWindow
@@ -65,6 +65,7 @@ struct ImmersiveView: View {
             
             if createGem {
                 convertElementsToGem(in: &content, from: objectsToDelete, create: objectsToAdd)
+                // createGem = false
             }
             
             guard let modelsContainer = content.entities.first(where: { $0.name == "ModelsContainer" }) else {
@@ -158,6 +159,22 @@ struct ImmersiveView: View {
             
             print("Inside cube: \(insideElements)")
             
+            let elements = insideElements.compactMap { Element(symbol: $0) }
+            
+            let resultingGem = Gemify.createGem(from: elements)
+
+            print(elements.map(\.name))
+            
+            let gemToCreate = ["Diamondtest"]
+                
+            Task { @MainActor in
+                await MainActor.run {
+                    objectsToDelete = elements.map( {$0.symbol} )
+                    objectsToAdd = gemToCreate
+                    createGem = true
+                }
+            }
+            
         } label: {
             Text("Get Position")
                 .font(.largeTitle)
@@ -167,10 +184,32 @@ struct ImmersiveView: View {
     }
     
     func convertElementsToGem(in content: inout RealityViewContent, from objectsToDelete: [String], create objectsToCreate: [String]) {
+        guard let container = content.entities.first(where: { $0.name == "ModelsContainer" }) else {
+            print("❌ ModelsContainer not found")
+            return
+        }
+        
         for name in objectsToDelete {
-            if let e = content.entities.first(where: { $0.name == name }) {
-                print("Removing \(name)")
-                content.remove(e)
+            if let e = container.children.first(where: { $0.name == name }) {
+                print("🧽 Removing \(name)")
+                
+                // 🧩 Remove from container
+                e.removeFromParent()
+                
+                // 🧩 Remove from elementEntities
+                elementEntities.removeValue(forKey: name)
+                
+                // 🧩 Remove from appModel
+                if let idComponent = e.components[ModelIDComponent.self] {
+                    appModel.removeModel(id: idComponent.id)
+                    print("🗑️ Removed \(name) from appModel")
+                } else {
+                    // Fallback: remove by modelName
+                    appModel.droppedModels.removeAll { $0.modelName == name }
+                    print("🗑️ Removed \(name) by modelName")
+                }
+            } else {
+                print("⚠️ \(name) not found in container")
             }
         }
         
@@ -222,6 +261,7 @@ struct ImmersiveView: View {
     
     private func createProceduralElement(_ element: ChemicalElement) -> Entity {
         let entity = Entity()
+        entity.name = element.symbol
         
         // Create sphere for the element
         let sphere = MeshResource.generateSphere(radius: 0.1)

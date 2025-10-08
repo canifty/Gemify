@@ -71,6 +71,15 @@ enum Element: String, CaseIterable, Codable {
         case .zirconium: return 40
         }
     }
+    
+    init?(symbol: String) {
+        guard let match = Element.allCases.first(where: {
+            $0.symbol.lowercased() == symbol.lowercased()
+        }) else {
+            return nil
+        }
+        self = match
+    }
 }
 
 // MARK: - UI Wrapper
