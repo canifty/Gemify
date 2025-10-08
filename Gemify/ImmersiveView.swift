@@ -14,6 +14,7 @@ struct ImmersiveView: View {
     @State private var createGem: Bool = false
     @State private var preloaded: [String:Entity] = [:]
     @State private var loaded = false
+    @State private var cancellable: AnyCancellable? = nil
     
     @State private var objectsToDelete = ["Panchito1", "Panchito2"] // This should be incomming from Faz's work
     @State private var objectsToAdd: [String] = ["Diamondtest"] // This should be incomming from Faz's work
@@ -143,6 +144,12 @@ struct ImmersiveView: View {
                 openWindow(id: "MenuWindow")
             }
         }
+        .onAppear {
+                    startAutoCheck()
+                }
+                .onDisappear {
+                    cancellable?.cancel()
+                }
         
         Button("Toggle 3D model") {
             createGem = true
@@ -267,10 +274,13 @@ struct ImmersiveView: View {
         entity.name = element.symbol
         
         // Create sphere for the element
+        let sphereEntity = Entity()
         let sphere = MeshResource.generateSphere(radius: 0.1)
         let material = SimpleMaterial(color: getElementColor(element), isMetallic: true)
         let modelComponent = ModelComponent(mesh: sphere, materials: [material])
-        entity.components.set(modelComponent)
+        sphereEntity.components.set(modelComponent)
+        sphereEntity.name = "sphereEntity"
+        entity.addChild(sphereEntity)
         
         // Add text label
         let textMesh = MeshResource.generateText(
@@ -281,8 +291,20 @@ struct ImmersiveView: View {
         let textMaterial = SimpleMaterial(color: .white, isMetallic: false)
         let textEntity = Entity()
         textEntity.components.set(ModelComponent(mesh: textMesh, materials: [textMaterial]))
-        textEntity.position = SIMD3<Float>(0, 0.15, 0)
-        entity.addChild(textEntity)
+        //textEntity.position = SIMD3<Float>(0.0, 0.15, 0)
+        textEntity.name = "textEntity"
+        
+        let bounds = textEntity.visualBounds(relativeTo: nil)
+        let centerX = (bounds.max.x + bounds.min.x) / 2
+        textEntity.position = SIMD3<Float>(-centerX, 0, 0)
+        
+        // Create a parent pivot entity
+        let textParent = Entity()
+        textParent.addChild(textEntity)
+        textParent.position = SIMD3<Float>(0, 0.15, 0)
+        textParent.name = "textParent"
+        
+        entity.addChild(textParent)
         
         // Add interaction components
         entity.components.set(GestureComponent())
@@ -307,9 +329,34 @@ struct ImmersiveView: View {
         default: return .systemGray
         }
     }
+    //start the recognition of objects inside box
+    private func startAutoCheck() {
+        // Cancel existing one if already running
+        cancellable?.cancel()
+        
+        // Create a timer publisher
+        cancellable = Timer
+            .publish(every: 1.0, on: .main, in: .common) // every second
+            .autoconnect()
+            .sink { _ in
+                for (_, entity) in elementEntities {
+                    let position = entity.position(relativeTo: nil)
+                    if isInsideCube(position) {
+                        for child in entity.children {
+                            child.startDancing(in: entity.scene)
+                            // print("💃 Started animation for \(name) -> \(child.name)")
+                        }
+                    } else {
+                        for child in entity.children {
+                            child.stopDancing()
+                            // print("🛑 Stopped animation for \(name) -> \(child.name)")
+                        }
+                    }
+                }
+            }
+    }
 }
 
 #Preview {
     ImmersiveView()
 }
-
