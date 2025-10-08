@@ -33,8 +33,8 @@ struct ElementMenuView: View {
                                 .bold()
                         }
                         RealityView { content in
-//                            change name with the element.name 
-                            if let entity = try? await Entity(named: "Diamondtest", in: realityKitContentBundle) {
+//                     TODO: change name with the element.name 
+                            if let entity = try? await Entity(named: "Diamond", in: realityKitContentBundle) {
                                 entity.scale = SIMD3<Float>(repeating: 0.1)
                                 content.add(entity)
                             }

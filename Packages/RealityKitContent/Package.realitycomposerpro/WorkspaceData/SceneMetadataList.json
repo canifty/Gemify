@@ -3,8 +3,7 @@
     "objectMetadataList" : [
       [
         "0AC7CD27-7CF1-4174-B569-2761D533919C",
-        "Root",
-        "Cone"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -12,7 +11,8 @@
       },
       [
         "0AC7CD27-7CF1-4174-B569-2761D533919C",
-        "Root"
+        "Root",
+        "Cone"
       ],
       {
         "isExpanded" : true,
@@ -22,70 +22,6 @@
   },
   "0F3018F0-6514-4433-8EB8-9F7AA9C188DB" : {
     "objectMetadataList" : [
-      [
-        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
-        "Root",
-        "Vintage_Metronome",
-        "Meshes",
-        "Sketchfab_model",
-        "root",
-        "GLTF_SceneRootNode",
-        "Tige_1"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
-        "Root",
-        "Vintage_Metronome"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
-        "Root",
-        "Vintage_Metronome",
-        "Meshes",
-        "Sketchfab_model",
-        "root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
-        "Root",
-        "Vintage_Metronome",
-        "Meshes",
-        "Sketchfab_model"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
-        "Root",
-        "Vintage_Metronome",
-        "Materials"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
       [
         "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
         "Root",
@@ -118,10 +54,47 @@
         "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
         "Root",
         "Vintage_Metronome",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
         "Meshes",
         "Sketchfab_model",
-        "root",
-        "GLTF_SceneRootNode"
+        "root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model"
       ],
       {
         "isExpanded" : true,
@@ -136,6 +109,33 @@
       {
         "isExpanded" : true,
         "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model",
+        "root",
+        "GLTF_SceneRootNode",
+        "Tige_1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0F3018F0-6514-4433-8EB8-9F7AA9C188DB",
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model",
+        "root",
+        "GLTF_SceneRootNode"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
       }
     ]
   },
@@ -143,7 +143,10 @@
     "objectMetadataList" : [
       [
         "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
-        "Root"
+        "Root",
+        "Vintage_Metronome",
+        "Meshes",
+        "Sketchfab_model"
       ],
       {
         "isExpanded" : true,
@@ -165,8 +168,7 @@
         "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
         "Root",
         "Vintage_Metronome",
-        "Meshes",
-        "Sketchfab_model"
+        "Meshes"
       ],
       {
         "isExpanded" : true,
@@ -175,8 +177,15 @@
       [
         "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
         "Root",
-        "Vintage_Metronome",
-        "Meshes"
+        "Vintage_Metronome"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -190,15 +199,6 @@
         "Sketchfab_model",
         "root",
         "GLTF_SceneRootNode"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "9D6F6E39-B757-4FF7-9998-16582D6D0BB7",
-        "Root",
-        "Vintage_Metronome"
       ],
       {
         "isExpanded" : true,
@@ -222,7 +222,8 @@
     "objectMetadataList" : [
       [
         "A11D99D3-89A7-4709-94A1-E42DE9717D04",
-        "Root"
+        "Root",
+        "Cube"
       ],
       {
         "isExpanded" : true,
@@ -230,8 +231,7 @@
       },
       [
         "A11D99D3-89A7-4709-94A1-E42DE9717D04",
-        "Root",
-        "Cube"
+        "Root"
       ],
       {
         "isExpanded" : true,
