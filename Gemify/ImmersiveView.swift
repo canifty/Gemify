@@ -14,6 +14,7 @@ struct ImmersiveView: View {
     @State private var createGem: Bool = false
     @State private var preloaded: [String:Entity] = [:]
     @State private var loaded = false
+    @State private var cancellable: AnyCancellable? = nil
     
     private var objectsToDelete = ["Panchito1", "Panchito2"] // This should be incomming from Faz's work
     private var objectsToAdd: [String] = ["Diamondtest"] // This should be incomming from Faz's work
@@ -142,6 +143,12 @@ struct ImmersiveView: View {
                 openWindow(id: "MenuWindow")
             }
         }
+        .onAppear {
+                    startAutoCheck()
+                }
+                .onDisappear {
+                    cancellable?.cancel()
+                }
         
         Button("Toggle 3D model") {
             createGem = true
@@ -278,17 +285,32 @@ struct ImmersiveView: View {
         case "Cu", "Zr": return .systemCyan
         default: return .systemGray
         }
-        .installGestures()
+    }
+    //start the recognition of objects inside box
+    private func startAutoCheck() {
+        // Cancel existing one if already running
+        cancellable?.cancel()
         
-        VStack {
-            Button("Start Dancing") {
-                parentEntity?.children.first?.startDancing(in: parentEntity?.scene)
+        // Create a timer publisher
+        cancellable = Timer
+            .publish(every: 1.0, on: .main, in: .common) // every second
+            .autoconnect()
+            .sink { _ in
+                for (_, entity) in elementEntities {
+                    let position = entity.position(relativeTo: nil)
+                    if isInsideCube(position) {
+                        for child in entity.children {
+                            child.startDancing(in: entity.scene)
+                            // print("💃 Started animation for \(name) -> \(child.name)")
+                        }
+                    } else {
+                        for child in entity.children {
+                            child.stopDancing()
+                            // print("🛑 Stopped animation for \(name) -> \(child.name)")
+                        }
+                    }
+                }
             }
-            Button("Stop Dancing") {
-                parentEntity?.children.first?.stopDancing()
-            }
-        }
-        .padding()
     }
 }
 
