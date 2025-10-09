@@ -11,9 +11,18 @@ import SwiftUI
 
 @main
 struct GemsApp: App {
+    
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissWindow) var dismissWindow
+    
     @State private var appModel = AppModel()
     
     var body: some SwiftUI.Scene {
+        
+        WindowGroup(id: "Launch") {
+            LaunchView()
+        }
+        .windowStyle(.plain)
         
         ImmersiveSpace(id: "ImmersiveSpace") {
             ImmersiveView()
