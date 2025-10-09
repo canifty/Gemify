@@ -79,7 +79,16 @@ struct ImmersiveView: View {
         .onDisappear {
             cancellable?.cancel()
         }
-        
+        .onAppear {
+            NotificationCenter.default.addObserver(forName: Notification.Name("TriggerCheckRecipe"), object: nil, queue: .main) { _ in
+                checkRecipe()
+            }
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("TriggerCheckRecipe"), object: nil)
+        }
+
+        LeverAnimation()
         debugButtons
     }
     
@@ -130,6 +139,7 @@ struct ImmersiveView: View {
         
         removeDeletedModels(from: container)
         addNewModels(to: container)
+        
     }
     
     private func removeDeletedModels(from container: Entity) {

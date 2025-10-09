@@ -28,8 +28,11 @@ struct LeverAnimation: View {
                     shapes: [ShapeResource.generateBox(size: size)]
                 ))
                 lever.transform.rotation = simd_quatf(angle: .pi , axis: [0, 1, 0])
-                lever.scale = SIMD3<Float>(repeating: 0.05)
+                lever.scale = SIMD3<Float>(repeating: 0.10)
+                lever.position = [1.0, 0.40, -2.5]
+
                 content.add(lever)
+                
                 
                 subscription = content.subscribe(
                     to: AnimationEvents.PlaybackCompleted.self,
@@ -58,10 +61,13 @@ struct LeverAnimation: View {
                 .onEnded { _ in
                     isAnimating.toggle()
                     if isAnimating {
-                        showGem = false // reset gem when starting
+                        showGem = false
+                        NotificationCenter.default.post(name: Notification.Name("TriggerCheckRecipe"), object: nil)
                     }
                 }
         )
+
+        
 
 //        if showGem {
 //            RealityView { content in
