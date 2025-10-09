@@ -41,6 +41,7 @@ extension UTType {
 @Observable
 class AppModel {
     var droppedModels: [DroppedModel] = []
+    var discoveredGemstones: [Gemstone] = []
     
     func addModel(_ modelName: String) {
         let newModel = DroppedModel(
@@ -61,6 +62,21 @@ class AppModel {
         )
         droppedModels.append(newModel)
         print("✅ Added element \(element.symbol) to models array")
+    }
+    
+    // Function to add new gems into the menu
+    func discoverGemstone(named gemstoneName: String) {
+        // Find the gemstone in your existing master list
+        guard let gemstone = allGemstones.first(where: { $0.name == gemstoneName }) else {
+            print("⚠️ No gemstone found with name \(gemstoneName)")
+            return
+        }
+        
+        // Prevent duplicates
+        if !discoveredGemstones.contains(where: { $0.name == gemstone.name }) {
+            discoveredGemstones.append(gemstone)
+            print("💎 Discovered \(gemstone.name)!")
+        }
     }
     
     func updateModelPosition(id: UUID, position: SIMD3<Float>) {
