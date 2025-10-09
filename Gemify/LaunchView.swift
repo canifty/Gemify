@@ -4,38 +4,50 @@
 //
 //  Created by Can Dindar on 30/09/25.
 //
+import SwiftUI
 
-//import SwiftUI
-//
-//struct LaunchView: View {
-//    
-//    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
-//    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
-//    
-//    @State private var isImmersiveSpaceOpen: Bool = false
-//    
-//    var body: some View {
-//        Button(isImmersiveSpaceOpen ? "Close Immersion" : "Open Immersion") {
-//            Task {
-//                if isImmersiveSpaceOpen {
-//                    await dismissImmersiveSpace()
-//                    isImmersiveSpaceOpen = false
-//                } else {
-//                    let result = await openImmersiveSpace(id: "Immersive")
-//                    switch result {
-//                    case .opened:
-//                        isImmersiveSpaceOpen = true
-//                    case .userCancelled, .error:
-//                        isImmersiveSpaceOpen = false
-//                    @unknown default:
-//                        isImmersiveSpaceOpen = false
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//#Preview {
-//    LaunchView()
-//}
+struct LaunchView: View {
+    
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissWindow) var dismissWindow
+    
+    var body: some View {
+        VStack {
+            Image("Banner")
+                .resizable()
+                .scaledToFill()
+            
+            VStack {
+                Text("Gemify")
+                    .font(.extraLargeTitle2)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 10)
+
+                
+                Text("Craft mesmerizing gems by blending mystical elements in a magical space.")
+                    .frame(width: 400)
+                    .font(.system(size: 18))
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, -5)
+                    .padding(.bottom, 10)
+                
+                Button("Start Building") {
+                    print("activated")
+                    Task {
+                        await openImmersiveSpace(id: "ImmersiveSpace")
+                        dismissWindow(id: "Launch")
+                    }
+                }
+            }
+            .padding(.bottom, 30)
+        }
+        .frame(maxWidth: 600, maxHeight: 440, alignment: .center)
+        .glassBackgroundEffect()
+    }
+}
+
+#Preview {
+    LaunchView()
+    
+}
