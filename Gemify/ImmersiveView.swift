@@ -238,6 +238,7 @@ struct ImmersiveView: View {
                 clone.position = [0, 1.0, -1.5]
                 print("Adding \(name)")
                 content.add(clone)
+                appModel.discoverGemstone(named: name)
             }
         }
     }

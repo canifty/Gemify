@@ -107,24 +107,19 @@ struct MenuView: View {
                         }
                     }
                     .padding()
-                }
-                else {
+                } else if selectedCategory == "gems" {
                     LazyVGrid(
                         columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 3),
                         spacing: 20
                     ) {
-                        ForEach(filteredModels) { model in
-                            MenuModelView(
-                                modelName: model.fileName,
-                                displayName: model.displayName,
-                                onAdd: {
-                                    appModel.addModel(model.fileName)
-                                }
+                        ForEach(appModel.discoveredGemstones) { gem in
+                            GemstoneMenuView(
+                                gem: gem
                             )
                             .transition(.scale.combined(with: .opacity))
                         }
                         
-                        if filteredModels.isEmpty {
+                        if appModel.discoveredGemstones.isEmpty {
                             VStack(spacing: 12) {
                                 Image(systemName: "cube.transparent")
                                     .font(.system(size: 60))
