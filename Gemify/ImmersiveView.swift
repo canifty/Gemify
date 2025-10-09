@@ -228,6 +228,7 @@ struct ImmersiveView: View {
         
         if let matchedGemstone = createGem(from: elements) {
             createGemIfNeeded(matchedGemstone, elements: elements)
+            appModel.discoverGemstone(named: matchedGemstone.name)
         } else {
         }
     }

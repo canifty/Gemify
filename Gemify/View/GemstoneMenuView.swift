@@ -23,6 +23,7 @@ struct GemstoneMenuView: View {
                         do {
                             let scene = try await Entity(named: gem.name, in: realityKitContentBundle)
                             scene.scale = SIMD3<Float>(repeating: Float(size / 400))
+                            scene.position = [0, 0, 0.02]
                             content.add(scene)
                         } catch { print(error) }
                     }
