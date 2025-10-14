@@ -112,24 +112,12 @@ struct MenuView: View {
                         columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 3),
                         spacing: 20
                     ) {
-                        ForEach(appModel.discoveredGemstones) { gem in
+                        ForEach(allGemstones) { gem in
                             GemstoneMenuView(
-                                gem: gem
+                                gem: gem,
+                                isLocked: !appModel.discoveredGemstones.contains(where:{ $0.id == gem.id})
                             )
                             .transition(.scale.combined(with: .opacity))
-                        }
-                        
-                        if appModel.discoveredGemstones.isEmpty {
-                            VStack(spacing: 12) {
-                                Image(systemName: "cube.transparent")
-                                    .font(.system(size: 60))
-                                    .foregroundColor(.secondary)
-                                Text("No \(selectedCategory) available")
-                                    .font(.headline)
-                                    .foregroundColor(.secondary)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .gridCellColumns(3)
                         }
                     }
                     .padding()

@@ -11,13 +11,14 @@ import RealityKitContent
 
 struct GemstoneMenuView: View {
     let gem: Gemstone
+    var isLocked: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
             let size = geometry.size.width
             ZStack {
                 RoundedRectangle(cornerRadius: size * 0.15)
-                    .fill(Color.secondary.opacity(0.5))
+                    .fill(Color.secondary.opacity(isLocked ? 0.3 : 0.5))
                 VStack {
                     RealityView { content in
                         do {
@@ -28,6 +29,19 @@ struct GemstoneMenuView: View {
                         } catch { print(error) }
                     }
                     .frame(width: size * 0.7, height: size * 0.7)
+                    .opacity(isLocked ? 0.3 : 1.0)
+                    
+                    if isLocked {
+                        ZStack {
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .frame(width: size * 0.35, height: size * 0.35)
+                            
+                            Image(systemName: "lock.fill")
+                                .font(.system(size: size * 0.18))
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
+                    }
                     
                     Text(gem.name)
                         .font(.system(size: size * 0.12, weight: .semibold))
@@ -41,3 +55,4 @@ struct GemstoneMenuView: View {
         .aspectRatio(1, contentMode: .fit)
     }
 }
+
