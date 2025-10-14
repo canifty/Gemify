@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum Element: String, CaseIterable, Codable {
     case hydrogen, lithium, beryllium, boron, carbon, oxygen
@@ -106,4 +107,15 @@ let chemicalElements: [ChemicalElement] = Element.allCases.map {
     ChemicalElement(element: $0)
 }
 
-
+func getElementColor(_ element: ChemicalElement) -> UIColor {
+    switch element.symbol {
+    case "H": return .systemRed
+    case "Li", "Na", "Ca": return .systemPurple
+    case "Be", "Mg", "Al": return .systemBlue
+    case "B", "C", "Si": return .systemBrown
+    case "O", "F": return .systemGreen
+    case "P": return .systemOrange
+    case "Cu", "Zr": return .systemCyan
+    default: return .systemGray
+    }
+}

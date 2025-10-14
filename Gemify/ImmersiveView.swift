@@ -37,7 +37,6 @@ struct ImmersiveView: View {
     
     var body: some View {
         RealityView { content in
-            
             setupInitialScene(content: content)
             
             // Create the blue cube detection
@@ -267,8 +266,8 @@ struct ImmersiveView: View {
     // MARK: - Recipe & Gem Creation
     private func checkRecipe() {
         
-        let insideElements = getElementsInsideCube()
-        
+        let insideElements = getElementsInsideCube(elementEntities: elementEntities, gemEntities: gemEntities, xRange: cubeXRange, yRange: cubeYRange, zRange: cubeZRange)
+                
         guard !insideElements.isEmpty else {
             return
         }
@@ -284,30 +283,6 @@ struct ImmersiveView: View {
             playFailureSound()
             print("No gems can be created with these elements: \(elements.map { $0.symbol }.joined(separator: ", "))")
         }
-    }
-    
-    private func getElementsInsideCube() -> [String] {
-        elementEntities
-            .filter { key, entity in
-                let symbol = key.components(separatedBy: "_").first ?? key
-                let isElement = symbol.count <= 2 && symbol.first?.isUppercase == true
-                
-                guard let idComponent = entity.components[ModelIDComponent.self] else {
-                    return false
-                }
-                let isGem = gemEntities.keys.contains(idComponent.id)
-                
-                let isInside = isInsideCube(entity.position(relativeTo: nil))
-                
-                if isElement && !isGem && isInside {
-                    print("\(symbol) in cube")
-                }
-                
-                return isElement && !isGem && isInside
-            }
-            .map { key, _ in
-                key.components(separatedBy: "_").first ?? key
-            }
     }
     
     private func createGemIfNeeded(_ gemstone: Gemstone, elements: [Element]) {
@@ -354,8 +329,8 @@ struct ImmersiveView: View {
             print("Gem not preloaded: \(gemFileName)")
             return
         }
-        
-        let gemPosition = calculateCubeCenter()
+                
+        let gemPosition = calculateCubeCenter(xRange: cubeXRange, yRange: cubeYRange, zRange: cubeZRange)
         let gemId = UUID()
         
         let clone = gemEntity.clone(recursive: true)
@@ -368,14 +343,6 @@ struct ImmersiveView: View {
         
         gemEntities[gemId] = clone
         elementEntities["\(gemFileName)_\(gemId)"] = clone
-    }
-    
-    private func calculateCubeCenter() -> SIMD3<Float> {
-        SIMD3<Float>(
-            (cubeXRange.lowerBound + cubeXRange.upperBound) / 2,
-            (cubeYRange.lowerBound + cubeYRange.upperBound) / 2,
-            (cubeZRange.lowerBound + cubeZRange.upperBound) / 2
-        )
     }
     
     // MARK: - Animation System
@@ -393,7 +360,7 @@ struct ImmersiveView: View {
                     }
                     
                     let position = entity.position(relativeTo: nil)
-                    if isInsideCube(position) {
+                    if isInsideCube(position, xRange: cubeXRange, yRange: cubeYRange, zRange: cubeZRange) {
                         for child in entity.children {
                             child.startDancing(in: entity.scene)
                         }
@@ -490,26 +457,6 @@ struct ImmersiveView: View {
         )
         
         return entity
-    }
-    
-    private func getElementColor(_ element: ChemicalElement) -> UIColor {
-        switch element.symbol {
-        case "H": return .systemRed
-        case "Li", "Na", "Ca": return .systemPurple
-        case "Be", "Mg", "Al": return .systemBlue
-        case "B", "C", "Si": return .systemBrown
-        case "O", "F": return .systemGreen
-        case "P": return .systemOrange
-        case "Cu", "Zr": return .systemCyan
-        default: return .systemGray
-        }
-    }
-    
-    // MARK: - Helper Functions
-    private func isInsideCube(_ position: SIMD3<Float>) -> Bool {
-        cubeXRange.contains(position.x) &&
-        cubeYRange.contains(position.y) &&
-        cubeZRange.contains(position.z)
     }
     
     private func handleDroppedElement(_ items: [DraggableElement]) -> Bool {
