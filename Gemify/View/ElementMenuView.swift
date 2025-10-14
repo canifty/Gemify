@@ -52,16 +52,12 @@ struct ElementMenuView: View {
                         Spacer()
                     }
                 }
+                .onTapGesture {
+                    onAdd()
+                }
+                .hoverEffect()
             }
             .aspectRatio(1, contentMode: .fit)
-            
-            Button {
-                onAdd()
-            } label: {
-                Label("Add", systemImage: "plus.circle.fill")
-                    .font(.caption)
-            }
-            .buttonStyle(.bordered)
         }
         .draggable(element.toDraggable())
     }
