@@ -39,6 +39,7 @@ struct ImmersiveView: View {
         RealityView { content in
             
             setupInitialScene(content: content)
+            
             // Create the blue cube detection
             /*
              let step = 0.25
@@ -259,6 +260,10 @@ struct ImmersiveView: View {
         }
     }
     
+    private func playFailureSound() {
+        AudioServicesPlaySystemSound(1053) // Error/failure sound
+    }
+    
     // MARK: - Recipe & Gem Creation
     private func checkRecipe() {
         
@@ -276,6 +281,8 @@ struct ImmersiveView: View {
             createGemIfNeeded(matchedGemstone, elements: elements)
             appModel.discoverGemstone(named: matchedGemstone.name)
         } else {
+            playFailureSound()
+            print("No gems can be created with these elements: \(elements.map { $0.symbol }.joined(separator: ", "))")
         }
     }
     
@@ -519,5 +526,3 @@ struct ImmersiveView: View {
 #Preview {
     ImmersiveView()
 }
-
-
