@@ -119,19 +119,6 @@ struct MenuView: View {
                             )
                             .transition(.scale.combined(with: .opacity))
                         }
-                        
-                        if allGemstones.isEmpty {
-                            VStack(spacing: 12) {
-                                Image(systemName: "cube.transparent")
-                                    .font(.system(size: 60))
-                                    .foregroundColor(.secondary)
-                                Text("No \(selectedCategory) available")
-                                    .font(.headline)
-                                    .foregroundColor(.secondary)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .gridCellColumns(3)
-                        }
                     }
                     .padding()
                 }
