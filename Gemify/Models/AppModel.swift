@@ -54,6 +54,13 @@ class AppModel {
     }
     
     func addElement(_ element: ChemicalElement) {
+        
+        // If the element has already been dropped, the user can't add another one of the same type.
+        if droppedModels.contains(where: { $0.elementData?.symbol == element.symbol }) {
+                print("⚠️ Element \(element.symbol) already exists in the scene. Only one allowed at a time.")
+                return
+            }
+        
         let newModel = DroppedModel(
             modelName: element.symbol,
             position: SIMD3<Float>(0, 1.5, -1.5),
