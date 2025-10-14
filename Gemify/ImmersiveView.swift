@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 import Combine
+import AVFoundation
 
 struct ImmersiveView: View {
     // MARK: - State Properties
@@ -21,6 +22,8 @@ struct ImmersiveView: View {
     
     @State private var modelsContainer: Entity?
     @State private var hasOpenedMenu = false
+    
+    @State private var audioPlayer: AVPlayer?
     
     // MARK: - Environment
     @Environment(AppModel.self) private var appModel
@@ -36,34 +39,35 @@ struct ImmersiveView: View {
         RealityView { content in
             
             setupInitialScene(content: content)
+            
             // Create the blue cube detection
             /*
-            let step = 0.25
-            let radius: Float = 0.02
-            
-            for x in stride(from: -0.5, through: 0.5, by: step) {
-                for y in stride(from: 0.0, through: 1.0, by: step) {
-                    for z in stride(from: -3.0, through: -2.0, by: step) {
-                        
-                        // Check if coordinate is at min or max
-                        let isOnXFace = (x == -0.5 || x == 0.5)
-                        let isOnYFace = (y == 0.0 || y == 1.0)
-                        let isOnZFace = (z == -3.0 || z == -2.0)
-                        
-                        // An edge happens when at least TWO faces intersect
-                        let facesCount = [isOnXFace, isOnYFace, isOnZFace].filter { $0 }.count
-                        
-                        if facesCount >= 2 {
-                            let sphere = ModelEntity(
-                                mesh: .generateSphere(radius: radius),
-                                materials: [SimpleMaterial(color: .blue, isMetallic: false)]
-                            )
-                            sphere.position = [Float(x), Float(y), Float(z)]
-                            content.add(sphere)
-                        }
-                    }
-                }
-            }
+             let step = 0.25
+             let radius: Float = 0.02
+             
+             for x in stride(from: -0.5, through: 0.5, by: step) {
+             for y in stride(from: 0.0, through: 1.0, by: step) {
+             for z in stride(from: -3.0, through: -2.0, by: step) {
+             
+             // Check if coordinate is at min or max
+             let isOnXFace = (x == -0.5 || x == 0.5)
+             let isOnYFace = (y == 0.0 || y == 1.0)
+             let isOnZFace = (z == -3.0 || z == -2.0)
+             
+             // An edge happens when at least TWO faces intersect
+             let facesCount = [isOnXFace, isOnYFace, isOnZFace].filter { $0 }.count
+             
+             if facesCount >= 2 {
+             let sphere = ModelEntity(
+             mesh: .generateSphere(radius: radius),
+             materials: [SimpleMaterial(color: .blue, isMetallic: false)]
+             )
+             sphere.position = [Float(x), Float(y), Float(z)]
+             content.add(sphere)
+             }
+             }
+             }
+             }
              */
         } update: { content in
             guard loaded else { return }
@@ -75,6 +79,7 @@ struct ImmersiveView: View {
         }
         .onAppear {
             startAutoCheck()
+            setupAudioSession()
         }
         .onDisappear {
             cancellable?.cancel()
@@ -87,7 +92,7 @@ struct ImmersiveView: View {
         .onDisappear {
             NotificationCenter.default.removeObserver(self, name: Notification.Name("TriggerCheckRecipe"), object: nil)
         }
-
+        
         LeverAnimation()
         debugButtons
     }
@@ -101,6 +106,38 @@ struct ImmersiveView: View {
             .buttonStyle(.bordered)
         }
         .padding()
+    }
+    
+    private func setupAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to setup audio session: \(error)")
+        }
+    }
+    
+    private func playGemCreationSound() {
+        
+        /*I used a system sound*/
+        AudioServicesPlaySystemSound(1057)
+        
+        /*
+         We will use this code when we have custom sound
+         
+         guard let soundURL = Bundle.main.url(forResource: "gem_creation", withExtension: "mp3") else {
+         print("Sound file not found")
+         return
+         }
+         
+         do {
+         audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+         audioPlayer?.volume = 0.7
+         audioPlayer?.play()
+         } catch {
+         print("Failed to play sound: \(error)")
+         }
+         */
     }
     
     // MARK: - Scene Setup
@@ -223,11 +260,15 @@ struct ImmersiveView: View {
         }
     }
     
+    private func playFailureSound() {
+        AudioServicesPlaySystemSound(1053) // Error/failure sound
+    }
+    
     // MARK: - Recipe & Gem Creation
     private func checkRecipe() {
         
         let insideElements = getElementsInsideCube()
-                
+        
         guard !insideElements.isEmpty else {
             return
         }
@@ -240,6 +281,8 @@ struct ImmersiveView: View {
             createGemIfNeeded(matchedGemstone, elements: elements)
             appModel.discoverGemstone(named: matchedGemstone.name)
         } else {
+            playFailureSound()
+            print("No gems can be created with these elements: \(elements.map { $0.symbol }.joined(separator: ", "))")
         }
     }
     
@@ -272,6 +315,7 @@ struct ImmersiveView: View {
         
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 100_000_000)
+            playGemCreationSound()
             createGemEntity(gemFileName: gemstone.name)
         }
     }
@@ -288,7 +332,7 @@ struct ImmersiveView: View {
                 
                 return symbol == element.symbol && !isGem
             }
-                        
+            
             for (uniqueKey, entity) in entitiesToRemove {
                 if let idComponent = entity.components[ModelIDComponent.self] {
                     appModel.removeModel(id: idComponent.id)
@@ -310,7 +354,7 @@ struct ImmersiveView: View {
             print("Gem not preloaded: \(gemFileName)")
             return
         }
-                
+        
         let gemPosition = calculateCubeCenter()
         let gemId = UUID()
         
