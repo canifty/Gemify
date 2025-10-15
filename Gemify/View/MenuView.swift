@@ -107,6 +107,9 @@ struct MenuView: View {
                         }
                     }
                     .padding()
+                    Button("Delete everything", role: .destructive) {
+                        appModel.deleteEverything.toggle()
+                    }
                 } else if selectedCategory == "gems" {
                     LazyVGrid(
                         columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 3),
