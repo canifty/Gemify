@@ -62,9 +62,8 @@ struct OnboardingView: View {
                         )
                         .padding()
                     case 4:
-                        EmptyView()
-//                        OnboardingGesture()
-//                            .padding()
+                        OnboardingGesture()
+                            .padding()
                     default:
                         LaunchView(isShowingButton: !shouldStartAppear)
                     }
@@ -144,16 +143,17 @@ struct PageView: View {
                     .font(.system(size: width * 0.05, weight: .bold))
                     .bold()
                 HStack(spacing: 20) {
-                    
+                    Spacer()
                     Text(context)
                         .font(.system(size: width * 0.02))
                         .bold()
                         .frame(maxWidth: width * 0.4, alignment: .leading)
-                    
+                    Spacer()
                     Image(image)
                         .resizable()
                         .scaledToFit()
                         .frame(width: width * 0.25)
+                    Spacer()
                 }
                 .padding(.leading)
             }
@@ -163,5 +163,4 @@ struct PageView: View {
 }
 #Preview {
     OnboardingView()
-        .frame(maxWidth: 600, maxHeight: 440)
 }
