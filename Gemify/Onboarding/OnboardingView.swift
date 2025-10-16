@@ -109,7 +109,7 @@ struct OnboardingView: View {
                         }
                     }
                 }
-                .frame(width: width, height: height * 0.8)
+                .frame(width: width, height: height * 0.95)
                 .onAppear {
                     shouldStartAppear = !OnboardingManager.shouldOnboardingDisplay()
                 }
@@ -137,11 +137,12 @@ struct PageView: View {
             let width = geo.size.width
             let height = geo.size.height
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 24) {
                 Text(title)
                     .italic()
                     .font(.system(size: width * 0.05, weight: .bold))
                     .bold()
+                    .padding(.leading, 32)
                 HStack(spacing: 20) {
                     Spacer()
                     Text(context)
@@ -161,6 +162,7 @@ struct PageView: View {
         }
     }
 }
+
 #Preview {
     OnboardingView()
 }

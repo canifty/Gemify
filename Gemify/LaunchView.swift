@@ -27,7 +27,7 @@ struct LaunchView: View {
                 
                 Text("Craft mesmerizing gems by blending mystical elements in a magical space.")
                     .frame(width: 400)
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .padding(.top, -5)

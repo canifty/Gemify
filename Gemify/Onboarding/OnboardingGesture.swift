@@ -8,64 +8,63 @@
 import SwiftUI
 
 struct OnboardingGesture: View {
-    
     var body: some View {
         GeometryReader { geo in
             let width = geo.size.width
-        VStack(alignment: .leading) {
-            Text("GESTURES")
-                .bold()
-                .italic()
-                .font(.system(size: width * 0.05, weight: .bold))
             
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 10){
-                    Spacer()
-                    Text("Pinch & Drag: move or reposition gems in space.")
-                        .font(.system(size: width * 0.02))
-                        .bold()
-                        .frame(maxWidth: width * 0.4, alignment: .leading)
-                    Spacer()
-                    Image("pinch")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: width * 0.12)
-                    Spacer()
+            VStack(alignment: .leading, spacing: 24) {
+                Text("GESTURES")
+                    .bold()
+                    .italic()
+                    .font(.system(size: width * 0.05, weight: .bold))
+                    .padding(.leading, 32)
+                
+                VStack(alignment: .center, spacing: 10) {
+                    GestureRow(
+                        text: "Pinch & Drag: move or reposition gems in space.",
+                        imageName: "pinch",
+                        width: width
+                    )
+                    GestureRow(
+                        text: "Rotate: examine every facet from all angles.",
+                        imageName: "rotate",
+                        width: width
+                    )
+                    GestureRow(
+                        text: "Zoom: get closer to admire the fine details.",
+                        imageName: "zoom",
+                        width: width
+                    )
                 }
-                HStack(spacing: 10){
-                    Spacer()
-
-                    Text("Rotate: examine every facet from all angles.")
-                        .font(.system(size: width * 0.02))
-                        .bold()
-                        .frame(maxWidth: width * 0.4, alignment: .leading)
-                    Spacer()
-                    Image("rotate")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: width * 0.20)
-                    Spacer()
-                }
-                HStack(spacing: 10){
-                    Spacer()
-
-                    Text("Zoom: get closer to admire the fine details.")
-                        .font(.system(size: width * 0.02))
-                        .bold()
-                        .frame(maxWidth: width * 0.4, alignment: .leading)
-                    Spacer()
-                    Image("zoom")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: width * 0.20)
-                    Spacer()
-                }
+                .padding(.horizontal, 32)
             }
-            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding()
     }
 }
+
+private struct GestureRow: View {
+    let text: String
+    let imageName: String
+    let width: CGFloat
+    
+    var body: some View {
+        HStack(alignment: .center, spacing: 20) {
+            Spacer()
+            Text(text)
+                .font(.system(size: width * 0.02))
+                .bold()
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: width * 0.5, alignment: .leading)
+            
+            Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: width * 0.15)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
 }
 
 #Preview {
