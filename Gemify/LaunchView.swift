@@ -37,7 +37,7 @@ struct LaunchView: View {
                     Button("Start Building") {
                         Task {
                             await openImmersiveSpace(id: "ImmersiveSpace")
-                            dismissWindow(id: "Launch")
+                            dismissWindow(id: "Onboarding")
                         }
                     }
                 }
