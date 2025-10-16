@@ -16,18 +16,22 @@ struct OnboardingView: View {
     @State private var shouldStartAppear: Bool = false
     
     private let totalPages = 5
-   
+    
     var body: some View {
-        Group {
+        GeometryReader { geo in
+            // `geo.size` gives you the current window size
+            let width = geo.size.width
+            let height = geo.size.height
             if !OnboardingManager.shouldOnboardingDisplay() {
                 LaunchView()
                     .glassBackgroundEffect()
             } else {
                 VStack {
-                    TabView(selection: $currentPage) {
+                    Spacer()
+                    switch currentPage {
+                    case 0:
                         LaunchView(isShowingButton: shouldStartAppear)
-                            .tag(0)
-                        
+                    case 1:
                         PageView(
                             title: "ELEMENTS",
                             context: "On your element menu you can find selection of atoms ready to be combined. \n\nEach one carries unique energy and potential. \n\nChoose wisely: the right combinations leads to precious creations.",
@@ -36,8 +40,8 @@ struct OnboardingView: View {
                             showOnboarding: $showOnboarding,
                             totalPages: totalPages
                         )
-                        .tag(1)
                         .padding()
+                    case 2:
                         PageView(
                             title: "INTERACTIONS",
                             context: "This is your workspace. \n\nPick up the atoms and place them on the fusion platform. \n\nWhen you’re ready, tap on the lever and witness atoms merge into something brilliant — a new gem.",
@@ -46,9 +50,8 @@ struct OnboardingView: View {
                             showOnboarding: $showOnboarding,
                             totalPages: totalPages
                         )
-                        .tag(2)
                         .padding()
-
+                    case 3:
                         PageView(
                             title: "GEMS",
                             context: "Each successful combination reveals a new gem and adds it to your collection.  \n\nDiscover what you’ve already forged — and what’s still waiting to be uncovered. \n\nComplete your gem table and master the art of creation.",
@@ -57,23 +60,17 @@ struct OnboardingView: View {
                             showOnboarding: $showOnboarding,
                             totalPages: totalPages
                         )
-                        .tag(3)
                         .padding()
-
-                        PageView(
-                            title: "GESTURES",
-                            context: "\n\nPinch & Drag: move or reposition gems in space. \n\nRotate: examine every facet from all angles.\n\nZoom: get closer to admire the fine details.",
-                            image: "Gestures",
-                            currentPage: $currentPage,
-                            showOnboarding: $showOnboarding,
-                            totalPages: totalPages
-                        )
-                        .tag(4)
-                        .padding()
-
+                    case 4:
+                        EmptyView()
+//                        OnboardingGesture()
+//                            .padding()
+                    default:
+                        LaunchView(isShowingButton: !shouldStartAppear)
                     }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-
+                    
+                    Spacer()
+                    
                     HStack {
                         if currentPage > 0 {
                             Button {
@@ -113,7 +110,7 @@ struct OnboardingView: View {
                         }
                     }
                 }
-                .padding(.bottom)
+                .frame(width: width, height: height * 0.8)
                 .onAppear {
                     shouldStartAppear = !OnboardingManager.shouldOnboardingDisplay()
                 }
@@ -137,26 +134,31 @@ struct PageView: View {
     let totalPages: Int
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(title)
-                .italic()
-                .font(.largeTitle)
-                .bold()
-            HStack(spacing: 20) {
-                
-                Text(context)
-                    .font(.system(size: 18))
+        GeometryReader { geo in
+            let width = geo.size.width
+            let height = geo.size.height
+            
+            VStack(alignment: .leading) {
+                Text(title)
+                    .italic()
+                    .font(.system(size: width * 0.05, weight: .bold))
                     .bold()
-                
-                Image(image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200)
-                    .padding(.top)
+                HStack(spacing: 20) {
+                    
+                    Text(context)
+                        .font(.system(size: width * 0.02))
+                        .bold()
+                        .frame(maxWidth: width * 0.4, alignment: .leading)
+                    
+                    Image(image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: width * 0.25)
+                }
+                .padding(.leading)
             }
-            .padding(.leading)
+            .padding()
         }
-        .padding()
     }
 }
 #Preview {
