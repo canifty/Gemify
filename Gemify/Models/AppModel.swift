@@ -97,3 +97,15 @@ class AppModel {
         droppedModels.removeAll { $0.id == id }
     }
 }
+
+// Functions to support the progress feedback. 
+extension AppModel {
+    var discoveredProgressText: String {
+        "\(discoveredGemstones.count) / \(allGemstones.count)"
+    }
+
+    var discoveredProgressFraction: Double {
+        guard !allGemstones.isEmpty else { return 0 }
+        return Double(discoveredGemstones.count) / Double(allGemstones.count)
+    }
+}
