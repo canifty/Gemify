@@ -42,6 +42,7 @@ extension UTType {
 class AppModel {
     var droppedModels: [DroppedModel] = []
     var discoveredGemstones: [Gemstone] = []
+    var deleteEverything: Bool = false //this one is used in MenuView and InmersiveView
     
     func addModel(_ modelName: String) {
         let newModel = DroppedModel(
