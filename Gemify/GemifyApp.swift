@@ -19,8 +19,9 @@ struct GemsApp: App {
     
     var body: some SwiftUI.Scene {
         
-        WindowGroup(id: "Launch") {
-            LaunchView()
+        WindowGroup(id: "Onboarding") {
+//            LaunchView()
+            OnboardingView()
         }
         .windowStyle(.plain)
         
