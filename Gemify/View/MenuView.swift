@@ -114,6 +114,9 @@ struct MenuView: View {
                     Button("Delete everything", role: .destructive) {
                         appModel.deleteEverything.toggle()
                     }
+                    Button("Restart", role: .destructive) {
+                        showRestartAlert = true
+                    }
                 } else if selectedCategory == "gems" {
                     VStack {
                         Text("Unlocked Gems: \(appModel.discoveredGemstones.count)/\(allGemstones.count)")
@@ -138,17 +141,16 @@ struct MenuView: View {
                 .spring(response: 0.3, dampingFraction: 0.7),
                 value: selectedCategory
             )
-            Button("Restart") {
-                showRestartAlert = true
-            }
             .alert("Restart Application?", isPresented: $showRestartAlert) {
                 Button("Cancel", role: .cancel) { }
                 Button("Restart", role: .destructive) {
+                    appModel.deleteEverything.toggle()
                     Task {
                         await dismissImmersiveSpace()
                     }
                     dismissWindow(id: "MenuWindow")
                     openWindow(id: "Launch")
+                    
                 }
             } message: {
                 Text("This will close the current session and return you to the launch screen.")
