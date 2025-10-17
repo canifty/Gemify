@@ -111,20 +111,27 @@ struct MenuView: View {
                         }
                     }
                     .padding()
-                } else if selectedCategory == "gems" {
-                    LazyVGrid(
-                        columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 3),
-                        spacing: 20
-                    ) {
-                        ForEach(allGemstones) { gem in
-                            GemstoneMenuView(
-                                gem: gem,
-                                isLocked: !appModel.discoveredGemstones.contains(where:{ $0.id == gem.id})
-                            )
-                            .transition(.scale.combined(with: .opacity))
-                        }
+                    Button("Delete everything", role: .destructive) {
+                        appModel.deleteEverything.toggle()
                     }
-                    .padding()
+                } else if selectedCategory == "gems" {
+                    VStack {
+                        Text("Unlocked Gems: \(appModel.discoveredGemstones.count)/\(allGemstones.count)")
+                            .padding()
+                        LazyVGrid(
+                            columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 3),
+                            spacing: 20
+                        ) {
+                            ForEach(allGemstones) { gem in
+                                GemstoneMenuView(
+                                    gem: gem,
+                                    isLocked: !appModel.discoveredGemstones.contains(where:{ $0.id == gem.id})
+                                )
+                                .transition(.scale.combined(with: .opacity))
+                            }
+                        }
+                        .padding()
+                    }
                 }
             }
             .animation(

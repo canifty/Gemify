@@ -13,6 +13,11 @@ struct GemstoneMenuView: View {
     let gem: Gemstone
     var isLocked: Bool = false
     
+    var recipeString: String {
+        let elementNames = gem.recipe.map { $0.symbol }.sorted().joined(separator: "+ ")
+        return elementNames
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             let size = geometry.size.width
@@ -27,29 +32,35 @@ struct GemstoneMenuView: View {
                             scene.position = [0, 0, 0.02]
                             content.add(scene)
                         } catch { print(error) }
+                  
                     }
-                    .frame(width: size * 0.7, height: size * 0.7)
-                    .opacity(isLocked ? 0.3 : 1.0)
-                    
-                    if isLocked {
-                        ZStack {
-                            Circle()
-                                .fill(.ultraThinMaterial)
-                                .frame(width: size * 0.35, height: size * 0.35)
-                            
-                            Image(systemName: "lock.fill")
-                                .font(.system(size: size * 0.18))
-                                .foregroundStyle(.white.opacity(0.8))
-                        }
-                    }
+                    .frame(width: size * 0.5, height: size * 0.5)
+                    .opacity(isLocked ? 0.5 : 1.0)
                     
                     Text(gem.name)
-                        .font(.system(size: size * 0.12, weight: .semibold))
+                        .font(.caption)
+                        .fontWeight(.semibold)
                         .foregroundStyle(.white)
-                        .minimumScaleFactor(0.7)
-                        .lineLimit(1)
+                    
+                    Text(recipeString)
+                        .font(.caption2)
+                        .fontWeight(.regular)
+                        .foregroundStyle(.white.opacity(0.8))
                 }
                 .frame(width: size, height: size)
+                .blur(radius: isLocked ? 2 : 0)
+                
+                if isLocked {
+                    ZStack {
+                        Circle()
+                            .fill(.ultraThinMaterial)
+                            .frame(width: size * 0.35, height: size * 0.35)
+                        
+                        Image(systemName: "lock.fill")
+                            .font(.system(size: size * 0.18))
+                            .foregroundStyle(.white.opacity(0.8))
+                    }
+                }
             }
         }
         .aspectRatio(1, contentMode: .fit)

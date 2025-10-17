@@ -91,6 +91,9 @@ struct ImmersiveView: View {
         .onDisappear {
             NotificationCenter.default.removeObserver(self, name: Notification.Name("TriggerCheckRecipe"), object: nil)
         }
+        .onChange(of: appModel.deleteEverything) { _, _ in
+            removeEverything()
+        }
         
         LeverAnimation()
         debugButtons
@@ -317,6 +320,17 @@ struct ImmersiveView: View {
                 elementEntities.removeValue(forKey: uniqueKey)
             }
         }
+    }
+    
+    private func removeEverything() {
+        for (uniqueKey, entity) in elementEntities {
+            if let idComponent = entity.components[ModelIDComponent.self] {
+                appModel.removeModel(id: idComponent.id)
+            }
+            entity.removeFromParent()
+            elementEntities.removeValue(forKey: uniqueKey)
+        }
+        
     }
     
     private func createGemEntity(gemFileName: String) {

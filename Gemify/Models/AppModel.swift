@@ -42,6 +42,7 @@ extension UTType {
 class AppModel {
     var droppedModels: [DroppedModel] = []
     var discoveredGemstones: [Gemstone] = []
+    var deleteEverything: Bool = false //this one is used in MenuView and InmersiveView
     
     func addModel(_ modelName: String) {
         let newModel = DroppedModel(
@@ -94,5 +95,17 @@ class AppModel {
     
     func removeModel(id: UUID) {
         droppedModels.removeAll { $0.id == id }
+    }
+}
+
+// Functions to support the progress feedback. 
+extension AppModel {
+    var discoveredProgressText: String {
+        "\(discoveredGemstones.count) / \(allGemstones.count)"
+    }
+
+    var discoveredProgressFraction: Double {
+        guard !allGemstones.isEmpty else { return 0 }
+        return Double(discoveredGemstones.count) / Double(allGemstones.count)
     }
 }
