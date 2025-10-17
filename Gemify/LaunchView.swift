@@ -11,12 +11,13 @@ struct LaunchView: View {
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     @Environment(\.dismissWindow) var dismissWindow
     
+    var isShowingButton: Bool = true
+    
     var body: some View {
         VStack {
             Image("Banner")
                 .resizable()
                 .scaledToFill()
-            
             VStack {
                 Text("Gemify")
                     .font(.extraLargeTitle2)
@@ -26,24 +27,25 @@ struct LaunchView: View {
                 
                 Text("Craft mesmerizing gems by blending mystical elements in a magical space.")
                     .frame(width: 400)
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .padding(.top, -5)
                     .padding(.bottom, 10)
                 
-                Button("Start Building") {
-                    print("activated")
-                    Task {
-                        await openImmersiveSpace(id: "ImmersiveSpace")
-                        dismissWindow(id: "Launch")
+                if isShowingButton {
+                    Button("Start Building") {
+                        Task {
+                            await openImmersiveSpace(id: "ImmersiveSpace")
+                            dismissWindow(id: "Onboarding")
+                        }
                     }
                 }
             }
             .padding(.bottom, 30)
         }
-        .frame(maxWidth: 600, maxHeight: 440, alignment: .center)
-        .glassBackgroundEffect()
+//        .frame(maxWidth: 600, maxHeight: 440, alignment: .center)
+//        .glassBackgroundEffect()
     }
 }
 
