@@ -149,7 +149,7 @@ struct MenuView: View {
                         await dismissImmersiveSpace()
                     }
                     dismissWindow(id: "MenuWindow")
-                    openWindow(id: "Launch")
+                    openWindow(id: "Onboarding")
                     
                 }
             } message: {
