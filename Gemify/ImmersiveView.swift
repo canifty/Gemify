@@ -23,8 +23,8 @@ struct ImmersiveView: View {
     @State private var modelsContainer: Entity?
     @State private var hasOpenedMenu = false
     
-    @State private var audioPlayer: AVPlayer?
-    
+    @State private var soundManager = SoundManager.shared
+
     // MARK: - Environment
     @Environment(AppModel.self) private var appModel
     @Environment(\.openWindow) private var openWindow
@@ -78,7 +78,6 @@ struct ImmersiveView: View {
         }
         .onAppear {
             startAutoCheck()
-            setupAudioSession()
         }
         .onDisappear {
             cancellable?.cancel()
@@ -110,38 +109,7 @@ struct ImmersiveView: View {
         .padding()
     }
     
-    private func setupAudioSession() {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("Failed to setup audio session: \(error)")
-        }
-    }
-    
-    private func playGemCreationSound() {
-        
-        /*I used a system sound*/
-        AudioServicesPlaySystemSound(1057)
-        
-        /*
-         We will use this code when we have custom sound
-         
-         guard let soundURL = Bundle.main.url(forResource: "gem_creation", withExtension: "mp3") else {
-         print("Sound file not found")
-         return
-         }
-         
-         do {
-         audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-         audioPlayer?.volume = 0.7
-         audioPlayer?.play()
-         } catch {
-         print("Failed to play sound: \(error)")
-         }
-         */
-    }
-    
+  
     // MARK: - Scene Setup
     private func setupInitialScene(content: RealityViewContent) {
         let container = Entity()
@@ -261,10 +229,7 @@ struct ImmersiveView: View {
             print("❌ Error loading \(model.modelName): \(error.localizedDescription)")
         }
     }
-    
-    private func playFailureSound() {
-        AudioServicesPlaySystemSound(1053) // Error/failure sound
-    }
+   
     
     // MARK: - Recipe & Gem Creation
     private func checkRecipe() {
@@ -283,7 +248,7 @@ struct ImmersiveView: View {
             createGemIfNeeded(matchedGemstone, elements: elements)
             appModel.discoverGemstone(named: matchedGemstone.name)
         } else {
-            playFailureSound()
+            soundManager.playFailureSound()
             print("No gems can be created with these elements: \(elements.map { $0.symbol }.joined(separator: ", "))")
         }
     }
@@ -293,7 +258,7 @@ struct ImmersiveView: View {
         
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 100_000_000)
-            playGemCreationSound()
+            soundManager.playGemCreationSound()
             createGemEntity(gemFileName: gemstone.name)
         }
     }
