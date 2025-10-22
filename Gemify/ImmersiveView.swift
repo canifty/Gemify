@@ -196,6 +196,8 @@ struct ImmersiveView: View {
         elementEntity.components.set(ModelIDComponent(id: model.id))
         container.addChild(elementEntity)
         
+        soundManager.playSound(named: "element_place")
+        
         let uniqueKey = "\(element.symbol)_\(model.id)"
         elementEntities[uniqueKey] = elementEntity
         
@@ -248,7 +250,7 @@ struct ImmersiveView: View {
             createGemIfNeeded(matchedGemstone, elements: elements)
             appModel.discoverGemstone(named: matchedGemstone.name)
         } else {
-            soundManager.playFailureSound()
+            soundManager.playSound(named: "gemstone_fail")
             print("No gems can be created with these elements: \(elements.map { $0.symbol }.joined(separator: ", "))")
         }
     }
@@ -258,7 +260,7 @@ struct ImmersiveView: View {
         
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 100_000_000)
-            soundManager.playGemCreationSound()
+            soundManager.playSound(named: "gemstone_create")
             createGemEntity(gemFileName: gemstone.name)
         }
     }

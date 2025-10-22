@@ -25,34 +25,20 @@ class SoundManager {
         }
     }
     
-    func playGemCreationSound() {
-        guard let soundURL = Bundle.main.url(forResource: "gemstone_create", withExtension: "mp3") else {
-            print("Sound file not found")
+    func playSound(named fileName: String, volume: Float = 0.7) {
+        guard let soundURL = Bundle.main.url(forResource: fileName, withExtension: "mp3") else {
+            print("Sound file not found: \(fileName)")
             return
         }
         
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-            audioPlayer?.volume = 0.7
+            audioPlayer?.volume = volume
             audioPlayer?.play()
         } catch {
             print("Failed to play sound: \(error)")
         }
     }
-    
-    func playFailureSound() {
-        guard let soundURL = Bundle.main.url(forResource: "gemstone_fail", withExtension: "mp3") else {
-            print("Sound file not found")
-            return
-        }
-        
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-            audioPlayer?.volume = 0.7
-            audioPlayer?.play()
-        } catch {
-            print("Failed to play sound: \(error)")
-        }
-    }
+
 }
 
