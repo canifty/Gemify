@@ -87,9 +87,13 @@ struct ImmersiveView: View {
             NotificationCenter.default.addObserver(forName: Notification.Name("TriggerCheckRecipe"), object: nil, queue: .main) { _ in
                 checkRecipe()
             }
+            appModel.isImmersiveSpaceOpen = true
         }
         .onDisappear {
+            removeEverything()
             NotificationCenter.default.removeObserver(self, name: Notification.Name("TriggerCheckRecipe"), object: nil)
+            appModel.isImmersiveSpaceOpen = false
+            
         }
         .onChange(of: appModel.deleteEverything) { _, _ in
             removeEverything()
