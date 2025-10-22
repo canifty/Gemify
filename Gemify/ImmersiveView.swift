@@ -23,7 +23,7 @@ struct ImmersiveView: View {
     @State private var modelsContainer: Entity?
     @State private var hasOpenedMenu = false
     
-    @State private var soundManager = SoundManager.shared
+    private var soundManager = SoundManager.shared
 
     // MARK: - Environment
     @Environment(AppModel.self) private var appModel
