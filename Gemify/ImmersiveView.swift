@@ -21,13 +21,11 @@ struct ImmersiveView: View {
     @State private var gemEntities: [UUID: Entity] = [:]
     
     @State private var modelsContainer: Entity?
-    @State private var hasOpenedMenu = false
     
     @State private var soundManager = SoundManager.shared
 
     // MARK: - Environment
     @Environment(AppModel.self) private var appModel
-    @Environment(\.openWindow) private var openWindow
     
     // MARK: - Constants
     private let cubeXRange: ClosedRange<Float> = -0.5...0.5
@@ -85,10 +83,13 @@ struct ImmersiveView: View {
         .onAppear {
             NotificationCenter.default.addObserver(forName: Notification.Name("TriggerCheckRecipe"), object: nil, queue: .main) { _ in
                 checkRecipe()
+                appModel.isImmersiveSpaceOpen = true
             }
         }
         .onDisappear {
+            removeEverything()
             NotificationCenter.default.removeObserver(self, name: Notification.Name("TriggerCheckRecipe"), object: nil)
+            appModel.isImmersiveSpaceOpen = false
         }
         .onChange(of: appModel.deleteEverything) { _, _ in
             removeEverything()
@@ -362,12 +363,6 @@ struct ImmersiveView: View {
     private func initializeScene() async {
         await preloadEntities()
         loaded = true
-        
-        if !hasOpenedMenu {
-            hasOpenedMenu = true
-            print("Opening menu window")
-            openWindow(id: "MenuWindow")
-        }
     }
     
     private func preloadEntities() async {

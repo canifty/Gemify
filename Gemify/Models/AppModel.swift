@@ -43,6 +43,7 @@ class AppModel {
     var droppedModels: [DroppedModel] = []
     var discoveredGemstones: [Gemstone] = []
     var deleteEverything: Bool = false //this one is used in MenuView and InmersiveView
+    var isImmersiveSpaceOpen = false //To have a track of the InmersiveView
     
     func addModel(_ modelName: String) {
         let newModel = DroppedModel(
