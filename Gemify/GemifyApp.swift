@@ -17,6 +17,15 @@ struct GemsApp: App {
     
     @State private var appModel = AppModel()
     
+    init() {
+        SoundManager.bootstrap()
+        SoundManager.shared.preloadSoundsAsync([
+            "element_place",
+            "gemstone_fail",
+            "gemstone_create"
+        ])
+    }
+    
     var body: some SwiftUI.Scene {
         
         WindowGroup(id: "Onboarding") {
