@@ -113,14 +113,10 @@ struct MenuView: View {
                     }
                     .padding()
                     Button("Delete everything", role: .destructive) {
-                        appModel.deleteEverything.toggle()
+                        deleteEverything()
                     }
                     Button("Open Inmersive") {
-                        if !appModel.isImmersiveSpaceOpen {
-                                Task {
-                                    await openImmersiveSpace(id: "ImmersiveSpace")
-                                }
-                            }
+                        openInmersive()
                     }
                 } else if selectedCategory == "gems" {
                     VStack {
@@ -151,5 +147,15 @@ struct MenuView: View {
         .glassBackgroundEffect()
         .cornerRadius(50)
 
+    }
+    func openInmersive() {
+        if !appModel.isImmersiveSpaceOpen {
+                Task {
+                    await openImmersiveSpace(id: "ImmersiveSpace")
+                }
+            }
+    }
+    func deleteEverything() {
+        appModel.deleteEverything.toggle()
     }
 }
