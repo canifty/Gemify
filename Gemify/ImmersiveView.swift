@@ -96,19 +96,19 @@ struct ImmersiveView: View {
         }
         
         LeverAnimation()
-        debugButtons
+//        debugButtons
     }
     
     // MARK: - UI Components
-    private var debugButtons: some View {
-        VStack(spacing: 16) {
-            Button("Check Recipe") {
-                checkRecipe()
-            }
-            .buttonStyle(.bordered)
-        }
-        .padding()
-    }
+//    private var debugButtons: some View {
+//        VStack(spacing: 16) {
+//            Button("Check Recipe") {
+//                checkRecipe()
+//            }
+//            .buttonStyle(.bordered)
+//        }
+//        .padding()
+//    }
     
     private func setupAudioSession() {
         do {
