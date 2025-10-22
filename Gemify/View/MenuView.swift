@@ -80,6 +80,7 @@ struct MenuView: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     @Environment(\.dismissWindow) private var dismissWindow
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
         
     @State private var selectedCategory = "elements"
     @State private var showRestartAlert = false
@@ -114,8 +115,12 @@ struct MenuView: View {
                     Button("Delete everything", role: .destructive) {
                         appModel.deleteEverything.toggle()
                     }
-                    Button("Restart", role: .destructive) {
-                        showRestartAlert = true
+                    Button("Open Inmersive") {
+                        if !appModel.isImmersiveSpaceOpen {
+                                Task {
+                                    await openImmersiveSpace(id: "ImmersiveSpace")
+                                }
+                            }
                     }
                 } else if selectedCategory == "gems" {
                     VStack {
@@ -141,20 +146,6 @@ struct MenuView: View {
                 .spring(response: 0.3, dampingFraction: 0.7),
                 value: selectedCategory
             )
-            .alert("Restart Application?", isPresented: $showRestartAlert) {
-                Button("Cancel", role: .cancel) { }
-                Button("Restart", role: .destructive) {
-                    appModel.deleteEverything.toggle()
-                    Task {
-                        await dismissImmersiveSpace()
-                    }
-                    dismissWindow(id: "MenuWindow")
-                    openWindow(id: "Onboarding")
-                    
-                }
-            } message: {
-                Text("This will close the current session and return you to the launch screen.")
-            }
         }
         .padding()
         .glassBackgroundEffect()
