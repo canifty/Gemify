@@ -7,7 +7,9 @@ struct MenuView: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     @Environment(\.dismissWindow) private var dismissWindow
-    
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+
+    @State private var selectedCategory = "elements"
     @State private var showRestartAlert = false
     @State private var selectedTab = 0
     
@@ -63,13 +65,13 @@ struct MenuView: View {
             }
             .toolbar {
                 Button {
-                    appModel.deleteEverything.toggle()
+                    deleteEverything()
                 } label: {
                     Label("Clean the Elements", systemImage: "arrow.trianglehead.clockwise")
                 }
                 
                 Button {
-                    showRestartAlert = true
+                    openInmersive()
                 } label: {
                     Label("Open Immersive", systemImage: "pano")
                 }
@@ -78,4 +80,14 @@ struct MenuView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
+    func openInmersive() {
+            if !appModel.isImmersiveSpaceOpen {
+                    Task {
+                        await openImmersiveSpace(id: "ImmersiveSpace")
+                    }
+                }
+        }
+        func deleteEverything() {
+            appModel.deleteEverything.toggle()
+        }
 }
