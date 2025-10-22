@@ -218,7 +218,9 @@ struct ImmersiveView: View {
             scene.scale = SIMD3<Float>(repeating: 1.0)
             scene.name = model.modelName
             
-            scene.components.set(GestureComponent())
+            var gestures = GestureComponent()
+            gestures.canAnimateOnGrab = true
+            scene.components.set(gestures)
             scene.components.set(InputTargetComponent())
             scene.components.set(CollisionComponent(
                 shapes: [ShapeResource.generateBox(size: [0.1, 0.1, 0.1])],
@@ -391,7 +393,9 @@ struct ImmersiveView: View {
     }
     
     private func addInteractionComponents(to entity: Entity) {
-        entity.components.set(GestureComponent())
+        var gestures = GestureComponent()
+        gestures.canAnimateOnGrab = true
+        entity.components.set(gestures)
         entity.components.set(InputTargetComponent())
         entity.components.set(CollisionComponent(
             shapes: [ShapeResource.generateBox(size: [0.3, 0.3, 0.3])],
