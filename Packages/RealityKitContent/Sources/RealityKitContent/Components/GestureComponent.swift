@@ -72,6 +72,9 @@ public struct GestureComponent: Component, Codable {
     /// A Boolean value that indicates whether a gesture can rotate the entity.
     public var canRotate: Bool = true
     
+    /// A Boolean value that indicates whether the grab gesture modifies the scale of the object.
+    public var canAnimateOnGrab: Bool = false
+    
     public init() {}
     
     // MARK: - Drag Logic
@@ -135,6 +138,18 @@ public struct GestureComponent: Component, Codable {
             
             // Indicate that a drag has started.
             state.isDragging = true
+            
+            if canAnimateOnGrab {
+                Task { @MainActor in
+                    let targetScale = entity.scale * 0.95
+                    entity.move(to: Transform(scale: targetScale,
+                                              rotation: entity.orientation(relativeTo: nil),
+                                              translation: entity.position(relativeTo: nil)),
+                                relativeTo: nil,
+                                duration: 0.15,
+                                timingFunction: .easeInOut)
+                }
+            }
 
         } else {
             // If this drag is ongoing, move the pivot entity to the target transform.
@@ -154,6 +169,18 @@ public struct GestureComponent: Component, Codable {
         if !state.isDragging {
             state.isDragging = true
             state.dragStartPosition = entity.scenePosition
+            
+            if canAnimateOnGrab {
+                Task { @MainActor in
+                    let targetScale = entity.scale * 0.95
+                    entity.move(to: Transform(scale: targetScale,
+                                              rotation: entity.orientation(relativeTo: nil),
+                                              translation: entity.position(relativeTo: nil)),
+                                relativeTo: nil,
+                                duration: 0.15,
+                                timingFunction: .easeInOut)
+                }
+            }
         }
    
         let translation3D = value.convert(value.gestureValue.translation3D, from: .local, to: .scene)
@@ -172,6 +199,17 @@ public struct GestureComponent: Component, Codable {
     /// Handle `.onEnded` actions for drag gestures.
     mutating func onEnded(value: EntityTargetValue<DragGesture.Value>) {
         let state = EntityGestureState.shared
+        
+        Task { @MainActor in
+            let targetScale = SIMD3<Float>(repeating: 1.0)
+            value.entity.move(to: Transform(scale: targetScale,
+                                            rotation: value.entity.orientation(relativeTo: nil),
+                                            translation: value.entity.position(relativeTo: nil)),
+                              relativeTo: nil,
+                              duration: 0.15,
+                              timingFunction: .easeInOut)
+        }
+        
         state.isDragging = false
         
         if let pivotEntity = state.pivotEntity,
