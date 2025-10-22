@@ -192,7 +192,9 @@ struct ImmersiveView: View {
     
     private func addProceduralElement(_ element: ChemicalElement, model: DroppedModel, to container: Entity) {
         let elementEntity = createProceduralElement(element)
-        elementEntity.position = model.position
+        let randomX = Float.random(in: -0.5...0.5)
+        let randomY = Float.random(in: 0.5...1.5)
+        elementEntity.position = SIMD3<Float>(randomX, randomY, -1.0)
         elementEntity.components.set(ModelIDComponent(id: model.id))
         container.addChild(elementEntity)
         
