@@ -10,6 +10,8 @@ struct LaunchView: View {
     
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     @Environment(\.dismissWindow) var dismissWindow
+    @Environment(\.openWindow) private var openWindow
+
     
     var isShowingButton: Bool = true
     
@@ -35,6 +37,7 @@ struct LaunchView: View {
                 
                 if isShowingButton {
                     Button("Start Building") {
+                        openWindow( id: "MenuWindow")
                         Task {
                             await openImmersiveSpace(id: "ImmersiveSpace")
                             dismissWindow(id: "Onboarding")

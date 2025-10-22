@@ -21,13 +21,13 @@ struct ImmersiveView: View {
     @State private var gemEntities: [UUID: Entity] = [:]
     
     @State private var modelsContainer: Entity?
-    @State private var hasOpenedMenu = false
+    //@State private var hasOpenedMenu = false
     
     @State private var audioPlayer: AVPlayer?
     
     // MARK: - Environment
     @Environment(AppModel.self) private var appModel
-    @Environment(\.openWindow) private var openWindow
+    //@Environment(\.openWindow) private var openWindow
     
     // MARK: - Constants
     private let cubeXRange: ClosedRange<Float> = -0.5...0.5
@@ -395,12 +395,6 @@ struct ImmersiveView: View {
     private func initializeScene() async {
         await preloadEntities()
         loaded = true
-        
-        if !hasOpenedMenu {
-            hasOpenedMenu = true
-            print("Opening menu window")
-            openWindow(id: "MenuWindow")
-        }
     }
     
     private func preloadEntities() async {

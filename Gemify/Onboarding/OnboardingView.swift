@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) var dismissWindow
     
     @State var showOnboarding: Bool = false
@@ -97,6 +98,8 @@ struct OnboardingView: View {
                             Button {
                                 OnboardingManager.incrementOnboardingCount()
                                 showOnboarding = false
+                                
+                                openWindow(id: "MenuWindow")
                                 
                                 Task {
                                     await openImmersiveSpace(id: "ImmersiveSpace")
