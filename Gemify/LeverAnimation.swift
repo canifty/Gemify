@@ -21,7 +21,9 @@ struct LeverAnimation: View {
                 lever.components.set(InputTargetComponent())
                 
                 let meshBounds = lever.visualBounds(relativeTo: nil)
-                let size = meshBounds.extents
+                var size = meshBounds.extents
+                size.y *= 1.7
+
                 lever.components.set(CollisionComponent(
                     shapes: [ShapeResource.generateBox(size: size)]
                 ))
